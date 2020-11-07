@@ -33,15 +33,23 @@
                                     <segue destination="xtu-Ve-8sP" kind="embed" id="HsG-k6-EVg"/>
                                 </connections>
                             </containerView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VFU-WE-JlS" customClass="EnterStateNameView" customModule="WriteInTheStates" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="134.5"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="JCf-Lr-T7t" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="6Xe-kT-w4s"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="CQT-84-FgF" secondAttribute="trailing" id="EAX-C3-tzt"/>
+                            <constraint firstItem="VFU-WE-JlS" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.15" id="JcI-aZ-OsL"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="VFU-WE-JlS" secondAttribute="trailing" id="OXI-UV-Y5N"/>
                             <constraint firstItem="JCf-Lr-T7t" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="WXo-HJ-Wsm"/>
+                            <constraint firstItem="VFU-WE-JlS" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="WdY-Rq-g5y"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="JCf-Lr-T7t" secondAttribute="bottom" id="nDQ-8X-chk"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="JCf-Lr-T7t" secondAttribute="trailing" id="nbC-Dx-BRF"/>
+                            <constraint firstItem="VFU-WE-JlS" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="r7c-UD-xsn"/>
                             <constraint firstItem="CQT-84-FgF" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="r8r-S5-Rp5"/>
                             <constraint firstItem="CQT-84-FgF" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="sbv-PB-lfw"/>
                             <constraint firstAttribute="bottom" secondItem="CQT-84-FgF" secondAttribute="bottom" id="vxf-HZ-XVC"/>
@@ -49,6 +57,7 @@
                     </view>
                     <connections>
                         <outlet property="containerViewTopConstraint" destination="r8r-S5-Rp5" id="DjP-GD-caV"/>
+                        <outlet property="enterStateView" destination="VFU-WE-JlS" id="bsl-nA-Tyj"/>
                         <outlet property="shadowView" destination="DVH-en-S4A" id="XPX-Th-M4C"/>
                         <outlet property="svgMap" destination="JCf-Lr-T7t" id="oMP-Zv-jku"/>
                     </connections>

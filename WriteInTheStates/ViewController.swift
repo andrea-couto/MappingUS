@@ -7,6 +7,7 @@ class ViewController: UIViewController
     @IBOutlet private weak var svgMap: SVGView!
     @IBOutlet weak var containerViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var shadowView: UIView!
+    @IBOutlet weak var enterStateView: EnterStateNameView!
     
     private var pathArray = [String]()
     private var selectedNode: Shape?
@@ -20,6 +21,12 @@ class ViewController: UIViewController
         svgMap.zoom.enable()
         shadowView.alpha = 0.0
         configureStatesViewController()
+        enterStateView.isHidden = true
+    }
+    
+    private func toggleEnterStateView(isHidden: Bool)
+    {
+        isHidden ? enterStateView.fadeOut() : enterStateView.fadeIn()
     }
     
     private func configureStatesViewController()
@@ -73,24 +80,24 @@ class ViewController: UIViewController
         {
             [weak self] (touch)
             in
-            if nodeTag == "MI" { return }
-            self?.selectedNode?.fill = Color.lightGray
-            let newNode = self?.svgMap.node.nodeBy(tag: nodeTag) as? Shape
-            if !(self?.selectedNode == newNode)
+            DispatchQueue.main.async
             {
-                self?.selectedNode = newNode
-                self?.selectedNode?.fill = Color.blue
-                self?.showTextField()
-            }
-            else
-            {
-                self?.selectedNode = nil
+                if nodeTag == "MI" { return }
+                self?.selectedNode?.fill = Color.lightGray
+                let newNode = self?.svgMap.node.nodeBy(tag: nodeTag) as? Shape
+                if !(self?.selectedNode == newNode)
+                {
+                    self?.selectedNode = newNode
+                    self?.selectedNode?.fill = Color.blue
+                    self?.toggleEnterStateView(isHidden: false)
+                }
+                else
+                {
+                    self?.selectedNode = nil
+                    self?.toggleEnterStateView(isHidden: true)
+                }
             }
         }
-    }
-    private func showTextField()
-    {
-        print("show textfield")
     }
     
     // TODO: - special handling for MI - grab "SP-" & "MI-" to fill as one shape
