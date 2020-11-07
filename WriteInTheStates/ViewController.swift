@@ -4,15 +4,36 @@ import SWXMLHash
 
 class ViewController: UIViewController
 {
-    @IBOutlet weak var svgMap: SVGView!
+    @IBOutlet private weak var svgMap: SVGView!
+    @IBOutlet weak var containerViewTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var shadowView: UIView!
+    
     private var pathArray = [String]()
+    var previousContainerViewTopConstraint: CGFloat = 0.0
+    let shadowViewAlpha: CGFloat = 0.4
 
     override func viewDidLoad()
     {
         super.viewDidLoad()
         registerStatesForSelection()
         svgMap.zoom.enable()
+        shadowView.alpha = 0.0
+        configureStatesViewController()
     }
+    
+    private func configureStatesViewController()
+    {
+         let compressedHeight = ExpansionState.height(forState: .compressed, inContainer: view.bounds)
+         let compressedTopConstraint = view.bounds.height - compressedHeight
+         containerViewTopConstraint.constant = compressedTopConstraint
+         previousContainerViewTopConstraint = containerViewTopConstraint.constant
+
+         // NB: Handle this in a more clean and production ready fashion.
+         if let statesViewController = children.first as? StatesViewController
+         {
+             statesViewController.delegate = self
+         }
+     }
     
     private func registerStatesForSelection()
     {
