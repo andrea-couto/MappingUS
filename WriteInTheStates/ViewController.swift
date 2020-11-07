@@ -28,7 +28,6 @@ class ViewController: UIViewController
          containerViewTopConstraint.constant = compressedTopConstraint
          previousContainerViewTopConstraint = containerViewTopConstraint.constant
 
-         // NB: Handle this in a more clean and production ready fashion.
          if let statesViewController = children.first as? StatesViewController
          {
              statesViewController.delegate = self
@@ -78,4 +77,3 @@ class ViewController: UIViewController
         }
     }
 }
-

@@ -12,6 +12,7 @@
 		58C13F382556786A008EA3AA /* StatesViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C13F372556786A008EA3AA /* StatesViewControllerDelegate.swift */; };
 		58C13F3B255678A2008EA3AA /* StatesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C13F3A255678A2008EA3AA /* StatesViewController.swift */; };
 		58C13F3E25567931008EA3AA /* ExpansionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C13F3D25567931008EA3AA /* ExpansionState.swift */; };
+		58DA970A2556855C0021253E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DA97092556855C0021253E /* Constants.swift */; };
 		58F279B8255656DB0030911C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F279B7255656DB0030911C /* AppDelegate.swift */; };
 		58F279BA255656DB0030911C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F279B9255656DB0030911C /* SceneDelegate.swift */; };
 		58F279BC255656DB0030911C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F279BB255656DB0030911C /* ViewController.swift */; };
@@ -27,6 +28,7 @@
 		58C13F372556786A008EA3AA /* StatesViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatesViewControllerDelegate.swift; sourceTree = "<group>"; };
 		58C13F3A255678A2008EA3AA /* StatesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatesViewController.swift; sourceTree = "<group>"; };
 		58C13F3D25567931008EA3AA /* ExpansionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpansionState.swift; sourceTree = "<group>"; };
+		58DA97092556855C0021253E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		58F279B4255656DB0030911C /* WriteInTheStates.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WriteInTheStates.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		58F279B7255656DB0030911C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		58F279B9255656DB0030911C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -85,6 +87,7 @@
 				58C13F372556786A008EA3AA /* StatesViewControllerDelegate.swift */,
 				58C13F3A255678A2008EA3AA /* StatesViewController.swift */,
 				58C13F3D25567931008EA3AA /* ExpansionState.swift */,
+				58DA97092556855C0021253E /* Constants.swift */,
 			);
 			path = WriteInTheStates;
 			sourceTree = "<group>";
@@ -228,6 +231,7 @@
 				58F279BA255656DB0030911C /* SceneDelegate.swift in Sources */,
 				58C13F3B255678A2008EA3AA /* StatesViewController.swift in Sources */,
 				58C13F3E25567931008EA3AA /* ExpansionState.swift in Sources */,
+				58DA970A2556855C0021253E /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
