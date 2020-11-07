@@ -33,9 +33,22 @@
                                     <segue destination="xtu-Ve-8sP" kind="embed" id="HsG-k6-EVg"/>
                                 </connections>
                             </containerView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VFU-WE-JlS" customClass="EnterStateNameView" customModule="WriteInTheStates" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VFU-WE-JlS">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="134.5"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter State Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rXl-32-X46">
+                                        <rect key="frame" x="25" y="50" width="364" height="34"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                <constraints>
+                                    <constraint firstItem="rXl-32-X46" firstAttribute="width" secondItem="VFU-WE-JlS" secondAttribute="width" multiplier="0.88" id="7bg-jF-vD1"/>
+                                    <constraint firstItem="rXl-32-X46" firstAttribute="centerY" secondItem="VFU-WE-JlS" secondAttribute="centerY" id="AFv-My-lvB"/>
+                                    <constraint firstItem="rXl-32-X46" firstAttribute="centerX" secondItem="VFU-WE-JlS" secondAttribute="centerX" id="a2i-DK-jmk"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -57,6 +70,7 @@
                     </view>
                     <connections>
                         <outlet property="containerViewTopConstraint" destination="r8r-S5-Rp5" id="DjP-GD-caV"/>
+                        <outlet property="enterStateTextField" destination="rXl-32-X46" id="8Zm-rZ-nwF"/>
                         <outlet property="enterStateView" destination="VFU-WE-JlS" id="bsl-nA-Tyj"/>
                         <outlet property="shadowView" destination="DVH-en-S4A" id="XPX-Th-M4C"/>
                         <outlet property="svgMap" destination="JCf-Lr-T7t" id="oMP-Zv-jku"/>
@@ -90,7 +104,7 @@
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="VMu-pr-7kG"/>
-                        <color key="backgroundColor" red="1" green="0.83234566450000003" blue="0.47320586440000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.87058823529411766" green="0.78823529411764703" blue="0.5725490196078431" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstItem="Wyn-7u-wCb" firstAttribute="top" secondItem="VMu-pr-7kG" secondAttribute="top" constant="15" id="0Hb-Ph-vHp"/>
                             <constraint firstItem="Wyn-7u-wCb" firstAttribute="leading" secondItem="VMu-pr-7kG" secondAttribute="leading" constant="15" id="CMp-nY-aVR"/>
@@ -114,6 +128,9 @@
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray6Color">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

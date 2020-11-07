@@ -7,7 +7,8 @@ class ViewController: UIViewController
     @IBOutlet private weak var svgMap: SVGView!
     @IBOutlet weak var containerViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var shadowView: UIView!
-    @IBOutlet weak var enterStateView: EnterStateNameView!
+    @IBOutlet private weak var enterStateView: UIView!
+    @IBOutlet private weak var enterStateTextField: UITextField!
     
     private var pathArray = [String]()
     private var selectedNode: Shape?
@@ -22,9 +23,10 @@ class ViewController: UIViewController
         shadowView.alpha = 0.0
         configureStatesViewController()
         enterStateView.isHidden = true
+        enterStateTextField.delegate = self
     }
     
-    private func toggleEnterStateView(isHidden: Bool)
+    func toggleEnterStateView(isHidden: Bool)
     {
         isHidden ? enterStateView.fadeOut() : enterStateView.fadeIn()
     }
@@ -88,7 +90,7 @@ class ViewController: UIViewController
                 if !(self?.selectedNode == newNode)
                 {
                     self?.selectedNode = newNode
-                    self?.selectedNode?.fill = Color.blue
+                    self?.selectedNode?.fill = Color.darkOrange
                     self?.toggleEnterStateView(isHidden: false)
                 }
                 else
@@ -101,4 +103,18 @@ class ViewController: UIViewController
     }
     
     // TODO: - special handling for MI - grab "SP-" & "MI-" to fill as one shape
+}
+extension ViewController: UITextFieldDelegate
+{
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    {
+        // TODO: - guard there is text in the textfield
+        textField.resignFirstResponder()
+        // TODO: - append the response to the array of states for that state's key
+        // need to convert to pathArray dictionary
+        print("TEXT: \(textField.text)")
+        // TODO: - fill the state to maybe a purple color so user knows they already answered for that state
+        textField.text = ""
+        return true
+    }
 }

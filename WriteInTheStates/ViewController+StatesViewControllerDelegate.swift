@@ -130,5 +130,10 @@ extension ViewController: StatesViewControllerDelegate
                 animateTopConstraint(constant: compressedTopConstraint, withVelocity: velocity)
             }
         }
+        
+        if statesViewController.expansionState == .fullHeight
+        {
+            toggleEnterStateView(isHidden: true)
+        }
     }
 }

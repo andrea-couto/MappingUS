@@ -4,7 +4,6 @@ class StatesViewController: UIViewController, UIGestureRecognizerDelegate, UISea
 {
     @IBOutlet weak var statesTableView: UITableView!
     
-    // TODO: - cant close the states drawer unless at top of tableview
     internal var panGestureRecognizer: UIPanGestureRecognizer?
     let cellReuseIdentifier = "cell"
     private var shouldHandleGesture: Bool = true
@@ -96,9 +95,7 @@ class StatesViewController: UIViewController, UIGestureRecognizerDelegate, UISea
             {
                 case .compressed:
                     return false
-                case .expanded:
-                    return false
-                case .fullHeight:
+                case .fullHeight, .expanded:
                     if velocity.y > 0.0
                     {
                         if statesTableView.contentOffset.y > 0.0
@@ -164,6 +161,8 @@ extension StatesViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         let cell:UITableViewCell = (statesTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) ?? UITableViewCell()) as UITableViewCell
+        // TODO: - add structs to the "state dictionary" with a property for whether or not the state has been used.
+        // filter strikeouts to the bottom
         cell.textLabel?.text = Array(Constants.stateDictionary.values)[indexPath.row]
         return cell
     }
