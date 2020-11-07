@@ -9,6 +9,7 @@ class ViewController: UIViewController
     @IBOutlet weak var shadowView: UIView!
     
     private var pathArray = [String]()
+    private var selectedNode: Shape?
     var previousContainerViewTopConstraint: CGFloat = 0.0
     let shadowViewAlpha: CGFloat = 0.4
 
@@ -72,8 +73,25 @@ class ViewController: UIViewController
         {
             [weak self] (touch)
             in
-            let nodeShape = self?.svgMap.node.nodeBy(tag: nodeTag) as? Shape
-            nodeShape?.fill = Color.blue
+            if nodeTag == "MI" { return }
+            self?.selectedNode?.fill = Color.lightGray
+            let newNode = self?.svgMap.node.nodeBy(tag: nodeTag) as? Shape
+            if !(self?.selectedNode == newNode)
+            {
+                self?.selectedNode = newNode
+                self?.selectedNode?.fill = Color.blue
+                self?.showTextField()
+            }
+            else
+            {
+                self?.selectedNode = nil
+            }
         }
     }
+    private func showTextField()
+    {
+        print("show textfield")
+    }
+    
+    // TODO: - special handling for MI - grab "SP-" & "MI-" to fill as one shape
 }
