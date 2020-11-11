@@ -5,15 +5,12 @@ import SWXMLHash
 class ViewController: UIViewController
 {
     @IBOutlet private weak var svgMap: SVGView!
-    @IBOutlet weak var containerViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var shadowView: UIView!
     @IBOutlet private weak var enterStateView: UIView!
-    @IBOutlet private weak var enterStateTextField: UITextField!
+    @IBOutlet private weak var enterStateTextField: DropDown!
     
     private var pathArray = [String]()
     private var selectedNode: Shape?
-    var previousContainerViewTopConstraint: CGFloat = 0.0
-    let shadowViewAlpha: CGFloat = 0.4
 
     override func viewDidLoad()
     {
@@ -21,28 +18,22 @@ class ViewController: UIViewController
         registerStatesForSelection()
         svgMap.zoom.enable()
         shadowView.alpha = 0.0
-        configureStatesViewController()
+        enterStateTextField.optionArray = Array(Constants.stateDictionary.values)
         enterStateView.isHidden = true
-        enterStateTextField.delegate = self
+        enterStateTextField.didSelect
+        {
+            [weak self] (selectedText, index, id)
+            in
+            // TODO: - take selectedNode and pair with selectedText in array
+            print("selected Text: \(selectedText)")
+            print("selected Node: \(self?.selectedNode?.tag)")
+        }
     }
     
     func toggleEnterStateView(isHidden: Bool)
     {
         isHidden ? enterStateView.fadeOut() : enterStateView.fadeIn()
     }
-    
-    private func configureStatesViewController()
-    {
-         let compressedHeight = ExpansionState.height(forState: .compressed, inContainer: view.bounds)
-         let compressedTopConstraint = view.bounds.height - compressedHeight
-         containerViewTopConstraint.constant = compressedTopConstraint
-         previousContainerViewTopConstraint = containerViewTopConstraint.constant
-
-         if let statesViewController = children.first as? StatesViewController
-         {
-             statesViewController.delegate = self
-         }
-     }
     
     private func registerStatesForSelection()
     {
@@ -103,18 +94,4 @@ class ViewController: UIViewController
     }
     
     // TODO: - special handling for MI - grab "SP-" & "MI-" to fill as one shape
-}
-extension ViewController: UITextFieldDelegate
-{
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool
-    {
-        // TODO: - guard there is text in the textfield
-        textField.resignFirstResponder()
-        // TODO: - append the response to the array of states for that state's key
-        // need to convert to pathArray dictionary
-        print("TEXT: \(textField.text)")
-        // TODO: - fill the state to maybe a purple color so user knows they already answered for that state
-        textField.text = ""
-        return true
-    }
 }

@@ -8,11 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		5802440025570C76000DD86B /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580243FF25570C76000DD86B /* UIView+Ext.swift */; };
+		586E4293255CA4AB00157562 /* DropDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586E4292255CA4AB00157562 /* DropDown.swift */; };
 		58C13F3125565C0D008EA3AA /* blank-us-map.svg in Resources */ = {isa = PBXBuildFile; fileRef = 58C13F3025565C0D008EA3AA /* blank-us-map.svg */; };
-		58C13F352556782B008EA3AA /* ViewController+StatesViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C13F342556782B008EA3AA /* ViewController+StatesViewControllerDelegate.swift */; };
-		58C13F382556786A008EA3AA /* StatesViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C13F372556786A008EA3AA /* StatesViewControllerDelegate.swift */; };
-		58C13F3B255678A2008EA3AA /* StatesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C13F3A255678A2008EA3AA /* StatesViewController.swift */; };
-		58C13F3E25567931008EA3AA /* ExpansionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C13F3D25567931008EA3AA /* ExpansionState.swift */; };
 		58DA970A2556855C0021253E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DA97092556855C0021253E /* Constants.swift */; };
 		58F279B8255656DB0030911C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F279B7255656DB0030911C /* AppDelegate.swift */; };
 		58F279BA255656DB0030911C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F279B9255656DB0030911C /* SceneDelegate.swift */; };
@@ -25,11 +22,8 @@
 
 /* Begin PBXFileReference section */
 		580243FF25570C76000DD86B /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
+		586E4292255CA4AB00157562 /* DropDown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDown.swift; sourceTree = "<group>"; };
 		58C13F3025565C0D008EA3AA /* blank-us-map.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "blank-us-map.svg"; sourceTree = "<group>"; };
-		58C13F342556782B008EA3AA /* ViewController+StatesViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+StatesViewControllerDelegate.swift"; sourceTree = "<group>"; };
-		58C13F372556786A008EA3AA /* StatesViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatesViewControllerDelegate.swift; sourceTree = "<group>"; };
-		58C13F3A255678A2008EA3AA /* StatesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatesViewController.swift; sourceTree = "<group>"; };
-		58C13F3D25567931008EA3AA /* ExpansionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpansionState.swift; sourceTree = "<group>"; };
 		58DA97092556855C0021253E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		58F279B4255656DB0030911C /* WriteInTheStates.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WriteInTheStates.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		58F279B7255656DB0030911C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -86,11 +80,8 @@
 				58F279C0255656DC0030911C /* Assets.xcassets */,
 				58F279C2255656DC0030911C /* LaunchScreen.storyboard */,
 				58F279C5255656DC0030911C /* Info.plist */,
-				58C13F342556782B008EA3AA /* ViewController+StatesViewControllerDelegate.swift */,
-				58C13F372556786A008EA3AA /* StatesViewControllerDelegate.swift */,
-				58C13F3A255678A2008EA3AA /* StatesViewController.swift */,
-				58C13F3D25567931008EA3AA /* ExpansionState.swift */,
 				58DA97092556855C0021253E /* Constants.swift */,
+				586E4292255CA4AB00157562 /* DropDown.swift */,
 			);
 			path = WriteInTheStates;
 			sourceTree = "<group>";
@@ -227,14 +218,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				58C13F382556786A008EA3AA /* StatesViewControllerDelegate.swift in Sources */,
-				58C13F352556782B008EA3AA /* ViewController+StatesViewControllerDelegate.swift in Sources */,
+				586E4293255CA4AB00157562 /* DropDown.swift in Sources */,
 				5802440025570C76000DD86B /* UIView+Ext.swift in Sources */,
 				58F279BC255656DB0030911C /* ViewController.swift in Sources */,
 				58F279B8255656DB0030911C /* AppDelegate.swift in Sources */,
 				58F279BA255656DB0030911C /* SceneDelegate.swift in Sources */,
-				58C13F3B255678A2008EA3AA /* StatesViewController.swift in Sources */,
-				58C13F3E25567931008EA3AA /* ExpansionState.swift in Sources */,
 				58DA970A2556855C0021253E /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
