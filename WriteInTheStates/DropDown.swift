@@ -435,23 +435,26 @@ extension DropDown: UITableViewDataSource
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         let cellIdentifier = "DropDownCell"
-        var cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier)
-        if cell == nil
-        {
-            cell = UITableViewCell(style: .default, reuseIdentifier: cellIdentifier)
-        }
-        cell!.backgroundColor = rowBackgroundColor
+        let stateInfoForCell = dataArray[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) ?? UITableViewCell(style: .default, reuseIdentifier: cellIdentifier)
+        cell.backgroundColor = stateInfoForCell.selected ? .lightGray : .white
         if self.imageArray.count > indexPath.row
         {
-            cell!.imageView!.image = UIImage(named: imageArray[indexPath.row])
+            cell.imageView!.image = UIImage(named: imageArray[indexPath.row])
         }
-        cell!.textLabel!.text = "\(dataArray[indexPath.row].stateName)"
-        cell!.selectionStyle = .none
-        cell?.textLabel?.font = self.font
-        cell?.textLabel?.textAlignment = self.textAlignment
-        cell?.textLabel?.numberOfLines = 0
-        cell?.textLabel?.lineBreakMode = .byWordWrapping
-        return cell!
+        let strokeEffect: [NSAttributedString.Key : Any] =
+        [
+            NSAttributedString.Key.strikethroughStyle: NSUnderlineStyle.single.rawValue
+        ]
+        let strokeString = NSAttributedString(string: "\(stateInfoForCell.stateName)", attributes: strokeEffect)
+        cell.textLabel?.attributedText = stateInfoForCell.selected ? strokeString : NSAttributedString(string: "\(stateInfoForCell.stateName)")
+        
+        cell.selectionStyle = .none
+        cell.textLabel?.font = self.font
+        cell.textLabel?.textAlignment = self.textAlignment
+        cell.textLabel?.numberOfLines = 0
+        cell.textLabel?.lineBreakMode = .byWordWrapping
+        return cell
     }
 }
 

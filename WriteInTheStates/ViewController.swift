@@ -5,9 +5,9 @@ import SWXMLHash
 class ViewController: UIViewController
 {
     @IBOutlet private weak var svgMap: SVGView!
-    @IBOutlet weak var shadowView: UIView!
     @IBOutlet private weak var enterStateView: UIView!
     @IBOutlet private weak var enterStateTextField: DropDown!
+    @IBOutlet private weak var showResultsButton: UIButton!
     
     // TODO:- Need a legend at the bottom with what the colors mean
     // also add a [show results] or something that will change the user answered states to red or green based on if they are correct
@@ -31,9 +31,9 @@ class ViewController: UIViewController
         super.viewDidLoad()
         registerStatesForSelection()
         svgMap.zoom.enable()
-        shadowView.alpha = 0.0
         enterStateTextField.optionArray = Constants.stateDictionary
         enterStateView.isHidden = true
+        configureShowResultButton()
         enterStateTextField.didSelect
         {
             [weak self] (selectedStateInfo, index, id)
@@ -43,8 +43,27 @@ class ViewController: UIViewController
             DispatchQueue.main.async
             {
                 self?.selectedNode?.fill = StateColors.filledInColor
+                for (index, node) in Constants.stateDictionary.enumerated()
+                {
+                    if node.statAbbreviation == selectedNodeTag
+                    {
+                        var newNodeInfo = node
+                        newNodeInfo.selected = true
+                        Constants.stateDictionary[index] = newNodeInfo
+                        self?.enterStateTextField.optionArray = Constants.stateDictionary
+                        break
+                    }
+                }
             }
         }
+    }
+    
+    private func configureShowResultButton()
+    {
+        showResultsButton.backgroundColor = .clear
+        showResultsButton.layer.cornerRadius = 5
+        showResultsButton.layer.borderWidth = 1
+        showResultsButton.layer.borderColor = UIColor.black.cgColor
     }
     
     func toggleEnterStateView(isHidden: Bool)
@@ -92,6 +111,7 @@ class ViewController: UIViewController
             in
             DispatchQueue.main.async
             {
+                self?.enterStateTextField.text = ""
                 if nodeTag == "MI" { return }
                 let newNode = self?.svgMap.node.nodeBy(tag: nodeTag) as? Shape
                 if !(self?.selectedNode == newNode)
@@ -112,6 +132,11 @@ class ViewController: UIViewController
                 }
             }
         }
+    }
+    
+    @IBAction func didTapShowResults()
+    {
+        // TODO: - handle showing the results to the user
     }
     
     // TODO: - special handling for MI - grab "SP-" & "MI-" to fill as one shape

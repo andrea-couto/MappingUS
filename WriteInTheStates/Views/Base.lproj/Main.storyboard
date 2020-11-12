@@ -22,11 +22,6 @@
                                     <userDefinedRuntimeAttribute type="string" keyPath="fileName" value="blank-us-map"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DVH-en-S4A" userLabel="shadowView">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VFU-WE-JlS">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="134.5"/>
                                 <subviews>
@@ -40,13 +35,24 @@
                                         </userDefinedRuntimeAttributes>
                                     </textField>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemGray6Color"/>
                                 <constraints>
                                     <constraint firstItem="rXl-32-X46" firstAttribute="width" secondItem="VFU-WE-JlS" secondAttribute="width" multiplier="0.88" id="7bg-jF-vD1"/>
                                     <constraint firstItem="rXl-32-X46" firstAttribute="centerY" secondItem="VFU-WE-JlS" secondAttribute="centerY" id="AFv-My-lvB"/>
                                     <constraint firstItem="rXl-32-X46" firstAttribute="centerX" secondItem="VFU-WE-JlS" secondAttribute="centerX" id="a2i-DK-jmk"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qc2-I0-y4x">
+                                <rect key="frame" x="151" y="824" width="112" height="38"/>
+                                <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
+                                <state key="normal" title="Show Results">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="didTapShowResults" destination="BYZ-38-t0r" eventType="touchUpInside" id="Mp8-NA-umx"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -54,8 +60,10 @@
                             <constraint firstItem="JCf-Lr-T7t" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="6Xe-kT-w4s"/>
                             <constraint firstItem="VFU-WE-JlS" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.15" id="JcI-aZ-OsL"/>
                             <constraint firstAttribute="trailing" secondItem="VFU-WE-JlS" secondAttribute="trailing" id="OXI-UV-Y5N"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Qc2-I0-y4x" secondAttribute="bottom" id="SDV-bH-6h6"/>
                             <constraint firstItem="JCf-Lr-T7t" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="WXo-HJ-Wsm"/>
                             <constraint firstItem="VFU-WE-JlS" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="WdY-Rq-g5y"/>
+                            <constraint firstItem="Qc2-I0-y4x" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="ZBn-3j-W1K"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="JCf-Lr-T7t" secondAttribute="bottom" id="nDQ-8X-chk"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="JCf-Lr-T7t" secondAttribute="trailing" id="nbC-Dx-BRF"/>
                             <constraint firstItem="VFU-WE-JlS" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="r7c-UD-xsn"/>
@@ -64,7 +72,7 @@
                     <connections>
                         <outlet property="enterStateTextField" destination="rXl-32-X46" id="8Zm-rZ-nwF"/>
                         <outlet property="enterStateView" destination="VFU-WE-JlS" id="bsl-nA-Tyj"/>
-                        <outlet property="shadowView" destination="DVH-en-S4A" id="XPX-Th-M4C"/>
+                        <outlet property="showResultsButton" destination="Qc2-I0-y4x" id="bAe-ub-AXv"/>
                         <outlet property="svgMap" destination="JCf-Lr-T7t" id="oMP-Zv-jku"/>
                     </connections>
                 </viewController>

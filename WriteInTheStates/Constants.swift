@@ -7,7 +7,7 @@ struct StateInfo
 
 struct Constants
 {
-    static let stateDictionary: [StateInfo] =
+    static var stateDictionary: [StateInfo] =
     [
         StateInfo(statAbbreviation: "AK", stateName: "Alaska"),
         StateInfo(statAbbreviation: "AL", stateName: "Alabama"),

@@ -50,6 +50,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		580AC2B2255DEAC6005DE7F5 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				58F279C2255656DC0030911C /* LaunchScreen.storyboard */,
+				58F279BD255656DB0030911C /* Main.storyboard */,
+				58C13F3025565C0D008EA3AA /* blank-us-map.svg */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		580AC2B5255DEB2A005DE7F5 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				58F279C5255656DC0030911C /* Info.plist */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		58F279AB255656DB0030911C = {
 			isa = PBXGroup;
 			children = (
@@ -71,17 +89,15 @@
 		58F279B6255656DB0030911C /* WriteInTheStates */ = {
 			isa = PBXGroup;
 			children = (
-				580243FF25570C76000DD86B /* UIView+Ext.swift */,
-				58C13F3025565C0D008EA3AA /* blank-us-map.svg */,
+				580AC2B5255DEB2A005DE7F5 /* Supporting Files */,
+				580AC2B2255DEAC6005DE7F5 /* Views */,
 				58F279B7255656DB0030911C /* AppDelegate.swift */,
 				58F279B9255656DB0030911C /* SceneDelegate.swift */,
 				58F279BB255656DB0030911C /* ViewController.swift */,
-				58F279BD255656DB0030911C /* Main.storyboard */,
-				58F279C0255656DC0030911C /* Assets.xcassets */,
-				58F279C2255656DC0030911C /* LaunchScreen.storyboard */,
-				58F279C5255656DC0030911C /* Info.plist */,
+				580243FF25570C76000DD86B /* UIView+Ext.swift */,
 				58DA97092556855C0021253E /* Constants.swift */,
 				586E4292255CA4AB00157562 /* DropDown.swift */,
+				58F279C0255656DC0030911C /* Assets.xcassets */,
 			);
 			path = WriteInTheStates;
 			sourceTree = "<group>";
@@ -373,7 +389,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 426MVMA2D7;
-				INFOPLIST_FILE = WriteInTheStates/Info.plist;
+				INFOPLIST_FILE = "WriteInTheStates/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -393,7 +409,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 426MVMA2D7;
-				INFOPLIST_FILE = WriteInTheStates/Info.plist;
+				INFOPLIST_FILE = "WriteInTheStates/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
