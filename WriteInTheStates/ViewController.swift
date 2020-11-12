@@ -9,8 +9,22 @@ class ViewController: UIViewController
     @IBOutlet private weak var enterStateView: UIView!
     @IBOutlet private weak var enterStateTextField: DropDown!
     
+    // TODO:- Need a legend at the bottom with what the colors mean
+    // also add a [show results] or something that will change the user answered states to red or green based on if they are correct
+    // maybe also a [show states] maybe that will overlay a state map SVG?
+    
     private var pathArray = [String]()
     private var selectedNode: Shape?
+    
+    // TODO: - when a user selects one of these Nodes the textfield should be preFilled with their guess for state name
+    private var userAnswered: [String: StateInfo] = [:]
+    
+    struct StateColors
+    {
+        static let filledInColor = Color.darkGoldenrod
+        static let defaultColor = Color.lightGray
+        static let selectedColor = Color.orange
+    }
 
     override func viewDidLoad()
     {
@@ -18,15 +32,18 @@ class ViewController: UIViewController
         registerStatesForSelection()
         svgMap.zoom.enable()
         shadowView.alpha = 0.0
-        enterStateTextField.optionArray = Array(Constants.stateDictionary.values)
+        enterStateTextField.optionArray = Constants.stateDictionary
         enterStateView.isHidden = true
         enterStateTextField.didSelect
         {
-            [weak self] (selectedText, index, id)
+            [weak self] (selectedStateInfo, index, id)
             in
-            // TODO: - take selectedNode and pair with selectedText in array
-            print("selected Text: \(selectedText)")
-            print("selected Node: \(self?.selectedNode?.tag)")
+            guard let selectedNodeTag = self?.selectedNode?.tag.first else { return }
+            self?.userAnswered[selectedNodeTag] = selectedStateInfo
+            DispatchQueue.main.async
+            {
+                self?.selectedNode?.fill = StateColors.filledInColor
+            }
         }
     }
     
@@ -76,16 +93,20 @@ class ViewController: UIViewController
             DispatchQueue.main.async
             {
                 if nodeTag == "MI" { return }
-                self?.selectedNode?.fill = Color.lightGray
                 let newNode = self?.svgMap.node.nodeBy(tag: nodeTag) as? Shape
                 if !(self?.selectedNode == newNode)
                 {
+                    if self?.selectedNode?.fill == StateColors.selectedColor
+                    {
+                        self?.selectedNode?.fill = StateColors.defaultColor // reset previous node color
+                    }
                     self?.selectedNode = newNode
-                    self?.selectedNode?.fill = Color.darkOrange
+                    self?.selectedNode?.fill = StateColors.selectedColor
                     self?.toggleEnterStateView(isHidden: false)
                 }
                 else
                 {
+                    self?.selectedNode?.fill = StateColors.defaultColor
                     self?.selectedNode = nil
                     self?.toggleEnterStateView(isHidden: true)
                 }

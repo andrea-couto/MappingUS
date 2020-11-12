@@ -1,17 +1,16 @@
 import UIKit
 
-open class DropDown: UITextField
+class DropDown: UITextField
 {
     var arrow : Arrow!
     var table : UITableView!
     var shadow : UIView!
-    public var selectedIndex: Int?
     
-    @IBInspectable public var rowHeight: CGFloat = 30
-    @IBInspectable public var rowBackgroundColor: UIColor = .white
-    @IBInspectable public var selectedRowColor: UIColor = .cyan
-    @IBInspectable public var hideOptionsWhenSelect = true
-    @IBInspectable  public var isSearchEnable: Bool = true
+    @IBInspectable var rowHeight: CGFloat = 30
+    @IBInspectable var rowBackgroundColor: UIColor = .white
+    @IBInspectable var selectedRowColor: UIColor = .init(rgb: 0xC6902B)
+    @IBInspectable var hideOptionsWhenSelect = true
+    @IBInspectable  var isSearchEnable: Bool = true
     {
         didSet
         {
@@ -19,7 +18,7 @@ open class DropDown: UITextField
         }
     }
     
-    @IBInspectable public var borderColor: UIColor =  UIColor.lightGray
+    @IBInspectable var borderColor: UIColor =  UIColor.lightGray
     {
         didSet
         {
@@ -27,9 +26,9 @@ open class DropDown: UITextField
         }
     }
     
-    @IBInspectable public var listHeight: CGFloat = 150
+    @IBInspectable var listHeight: CGFloat = 150
     
-    @IBInspectable public var borderWidth: CGFloat = 0.0
+    @IBInspectable var borderWidth: CGFloat = 0.0
     {
         didSet
         {
@@ -37,7 +36,7 @@ open class DropDown: UITextField
         }
     }
     
-    @IBInspectable public var cornerRadius: CGFloat = 5.0
+    @IBInspectable var cornerRadius: CGFloat = 5.0
     {
         didSet
         {
@@ -46,14 +45,14 @@ open class DropDown: UITextField
     }
     
     private  var tableheightX: CGFloat = 100
-    private  var dataArray = [String]()
+    private  var dataArray = [StateInfo]()
     private  var imageArray = [String]()
     private  var parentController:UIViewController?
     private  var pointToParent = CGPoint(x: 0, y: 0)
     private var backgroundView = UIView()
     private var keyboardHeight:CGFloat = 0
     
-    public var optionArray = [String]()
+    var optionArray = [StateInfo]()
     {
         didSet
         {
@@ -61,7 +60,7 @@ open class DropDown: UITextField
         }
     }
     
-    public var optionIds : [Int]?
+    var optionIds : [Int]?
     
     var searchText = String()
     {
@@ -75,16 +74,15 @@ open class DropDown: UITextField
             {
                 self.dataArray = optionArray.filter
                 {
-                    return $0.range(of: searchText, options: .caseInsensitive) != nil
+                    return $0.stateName.range(of: searchText, options: .caseInsensitive) != nil
                 }
             }
             reSizeTable()
-            selectedIndex = nil
             self.table.reloadData()
         }
     }
     
-    @IBInspectable public var arrowSize: CGFloat = 15
+    @IBInspectable var arrowSize: CGFloat = 15
     {
         didSet
         {
@@ -93,7 +91,7 @@ open class DropDown: UITextField
         }
     }
     
-    @IBInspectable public var arrowColor: UIColor = .black
+    @IBInspectable var arrowColor: UIColor = .black
     {
         didSet
         {
@@ -101,17 +99,17 @@ open class DropDown: UITextField
         }
     }
     
-    @IBInspectable public var checkMarkEnabled: Bool = true
-    @IBInspectable public var handleKeyboard: Bool = true
+    @IBInspectable var checkMarkEnabled: Bool = true
+    @IBInspectable var handleKeyboard: Bool = true
     
-    public override init(frame: CGRect)
+    override init(frame: CGRect)
     {
         super.init(frame: frame)
         setupUI()
         self.delegate = self
     }
     
-    public required init(coder aDecoder: NSCoder)
+    required init(coder aDecoder: NSCoder)
     {
         super.init(coder: aDecoder)!
         setupUI()
@@ -119,7 +117,7 @@ open class DropDown: UITextField
     }
     
     
-    private var didSelectCompletion: (String, Int ,Int) -> () = {selectedText, index , id  in }
+    private var didSelectCompletion: (StateInfo, Int ,Int) -> () = {selectedText, index , id  in }
     private var TableWillAppearCompletion: () -> () = { }
     private var TableDidAppearCompletion: () -> () = { }
     private var TableWillDisappearCompletion: () -> () = { }
@@ -215,7 +213,7 @@ open class DropDown: UITextField
         return superView!.convert(pnt, to: baseView)
     }
     
-    public func showList()
+    func showList()
     {
         if parentController == nil
         {
@@ -283,7 +281,7 @@ open class DropDown: UITextField
                         })
     }
     
-    public func hideList()
+    func hideList()
     {
         TableWillDisappearCompletion()
         UIView.animate(withDuration: 1.0,
@@ -315,7 +313,7 @@ open class DropDown: UITextField
                         })
     }
     
-    @objc public func touchAction()
+    @objc func touchAction()
     {
         isSelected ?  hideList() : showList()
     }
@@ -361,27 +359,27 @@ open class DropDown: UITextField
     }
     
     //MARK: Actions Methods
-    public func didSelect(completion: @escaping (_ selectedText: String, _ index: Int , _ id:Int ) -> ())
+    func didSelect(completion: @escaping (_ selectedText: StateInfo, _ index: Int , _ id:Int ) -> ())
     {
         didSelectCompletion = completion
     }
     
-    public func listWillAppear(completion: @escaping () -> ())
+    func listWillAppear(completion: @escaping () -> ())
     {
         TableWillAppearCompletion = completion
     }
     
-    public func listDidAppear(completion: @escaping () -> ())
+    func listDidAppear(completion: @escaping () -> ())
     {
         TableDidAppearCompletion = completion
     }
     
-    public func listWillDisappear(completion: @escaping () -> ())
+    func listWillDisappear(completion: @escaping () -> ())
     {
         TableWillDisappearCompletion = completion
     }
     
-    public func listDidDisappear(completion: @escaping () -> ())
+    func listDidDisappear(completion: @escaping () -> ())
     {
         TableDidDisappearCompletion = completion
     }
@@ -390,25 +388,25 @@ open class DropDown: UITextField
 //MARK: UITextFieldDelegate
 extension DropDown : UITextFieldDelegate
 {
-    public func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
     {
         superview?.endEditing(true)
         return false
     }
     
-    public func  textFieldDidBeginEditing(_ textField: UITextField)
+    func  textFieldDidBeginEditing(_ textField: UITextField)
     {
         textField.text = ""
         self.dataArray = self.optionArray
         touchAction()
     }
     
-    public func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool
     {
         return isSearchEnable
     }
     
-    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool
     {
         if string != ""
         {
@@ -429,12 +427,12 @@ extension DropDown : UITextFieldDelegate
 ///MARK: UITableViewDataSource
 extension DropDown: UITableViewDataSource
 {
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
         return dataArray.count
     }
     
-    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         let cellIdentifier = "DropDownCell"
         var cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier)
@@ -442,20 +440,12 @@ extension DropDown: UITableViewDataSource
         {
             cell = UITableViewCell(style: .default, reuseIdentifier: cellIdentifier)
         }
-        if indexPath.row != selectedIndex
-        {
-            cell!.backgroundColor = rowBackgroundColor
-        }
-        else
-        {
-            cell?.backgroundColor = selectedRowColor
-        }
+        cell!.backgroundColor = rowBackgroundColor
         if self.imageArray.count > indexPath.row
         {
             cell!.imageView!.image = UIImage(named: imageArray[indexPath.row])
         }
-        cell!.textLabel!.text = "\(dataArray[indexPath.row])"
-        cell!.accessoryType = (indexPath.row == selectedIndex) && checkMarkEnabled  ? .checkmark : .none
+        cell!.textLabel!.text = "\(dataArray[indexPath.row].stateName)"
         cell!.selectionStyle = .none
         cell?.textLabel?.font = self.font
         cell?.textLabel?.textAlignment = self.textAlignment
@@ -468,10 +458,10 @@ extension DropDown: UITableViewDataSource
 //MARK: UITableViewDelegate
 extension DropDown: UITableViewDelegate
 {
-    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
-        selectedIndex = (indexPath as NSIndexPath).row
-        let selectedText = self.dataArray[self.selectedIndex ?? 0]
+        let selectedIndex = (indexPath as NSIndexPath).row
+        let selectedText = self.dataArray[selectedIndex].stateName
         tableView.cellForRow(at: indexPath)?.alpha = 0
         UIView.animate(withDuration: 0.5,
                        animations:
@@ -493,19 +483,17 @@ extension DropDown: UITableViewDelegate
             touchAction()
             self.endEditing(true)
         }
-        if let selected = optionArray.firstIndex(where: {$0 == selectedText})
+        if let selectedIndex = optionArray.firstIndex(where: {$0.stateName == selectedText})
         {
-            if let id = optionIds?[selected]
+            if let id = optionIds?[selectedIndex]
             {
-                didSelectCompletion(selectedText, selected , id )
+                didSelectCompletion(optionArray[selectedIndex], selectedIndex, id )
             }
             else
             {
-                didSelectCompletion(selectedText, selected , 0)
+                didSelectCompletion(optionArray[selectedIndex], selectedIndex, 0)
             }
-            
         }
-        
     }
 }
 
