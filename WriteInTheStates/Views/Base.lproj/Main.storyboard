@@ -31,6 +31,7 @@
                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter State Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rXl-32-X46" customClass="DropDown" customModule="WriteInTheStates" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="50" width="229.5" height="34"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                                 <userDefinedRuntimeAttributes>
@@ -56,7 +57,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qc2-I0-y4x">
-                                <rect key="frame" x="151" y="824" width="112" height="38"/>
+                                <rect key="frame" x="151" y="804" width="112" height="38"/>
                                 <color key="backgroundColor" systemColor="systemGray6Color"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
@@ -74,7 +75,7 @@
                             <constraint firstItem="JCf-Lr-T7t" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="6Xe-kT-w4s"/>
                             <constraint firstItem="VFU-WE-JlS" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.15" id="JcI-aZ-OsL"/>
                             <constraint firstAttribute="trailing" secondItem="VFU-WE-JlS" secondAttribute="trailing" id="OXI-UV-Y5N"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Qc2-I0-y4x" secondAttribute="bottom" id="SDV-bH-6h6"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Qc2-I0-y4x" secondAttribute="bottom" constant="20" id="SDV-bH-6h6"/>
                             <constraint firstItem="JCf-Lr-T7t" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="WXo-HJ-Wsm"/>
                             <constraint firstItem="VFU-WE-JlS" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="WdY-Rq-g5y"/>
                             <constraint firstItem="Qc2-I0-y4x" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="ZBn-3j-W1K"/>

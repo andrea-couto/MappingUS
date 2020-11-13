@@ -16,8 +16,18 @@ class ViewController: UIViewController
     private var pathArray = [String]()
     private var selectedNode: Shape?
     
-    // TODO: - when a user selects one of these Nodes the textfield should be preFilled with their guess for state name
+    // TODO: - when a user selects one of these Nodes the textfield should be pre-filled with their guess for state name
     private var userAnswered: [String: StateInfo] = [:]
+    {
+        didSet
+        {
+            if userAnswered.count > 0
+            {
+                showResultsButton.isEnabled = true
+                showResultsButton.alpha = 1.0
+            }
+        }
+    }
     
     struct StateColors
     {
@@ -34,6 +44,7 @@ class ViewController: UIViewController
         enterStateTextField.optionArray = Constants.stateDictionary
         enterStateView.isHidden = true
         configureButtons()
+        
         enterStateTextField.didSelect
         {
             [weak self] (selectedStateInfo, index, id)
@@ -54,6 +65,8 @@ class ViewController: UIViewController
         showResultsButton.layer.cornerRadius = 5
         showResultsButton.layer.borderWidth = 1
         showResultsButton.layer.borderColor = UIColor.black.cgColor
+        showResultsButton.isEnabled = false
+        showResultsButton.alpha = 0.5
         
         showStateButton.backgroundColor = .clear
         showStateButton.layer.cornerRadius = 5
@@ -132,7 +145,6 @@ class ViewController: UIViewController
     
     @IBAction func didTapShowResults()
     {
-        // TODO: - toggle to Hide Results on tap 
         for item in userAnswered
         {
             if let node = svgMap.node.nodeBy(tag: item.key) as? Shape
@@ -151,7 +163,10 @@ class ViewController: UIViewController
     
     @IBAction func didTapShowState()
     {
-        // TODO: - handle showing the state name to the user
+        guard let selectedNode = selectedNode else { return }
+        let stateInfoForSelectedNode = Constants.stateDictionary.first(where: { $0.stateAbbreviation == selectedNode.tag.first })
+        enterStateTextField.text = stateInfoForSelectedNode?.stateName
+        enterStateTextField.searchText = stateInfoForSelectedNode?.stateName ?? ""
     }
     
     // TODO: - special handling for MI - grab "SP-" & "MI-" to fill as one shape

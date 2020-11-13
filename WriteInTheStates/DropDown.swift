@@ -446,7 +446,7 @@ extension DropDown: UITableViewDataSource
         ]
         let strokeString = NSAttributedString(string: "\(stateInfoForCell.stateName)", attributes: strokeEffect)
         cell.textLabel?.attributedText = selectedArray.contains(where: { $0.stateName == stateInfoForCell.stateName }) ? strokeString : NSAttributedString(string: "\(stateInfoForCell.stateName)")
-        
+        cell.textLabel?.textColor = .black        
         cell.selectionStyle = .none
         cell.textLabel?.font = font
         cell.textLabel?.textAlignment = textAlignment
