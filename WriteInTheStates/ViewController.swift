@@ -38,24 +38,12 @@ class ViewController: UIViewController
         {
             [weak self] (selectedStateInfo, index, id)
             in
-            guard let selectedNodeTag = self?.selectedNode?.tag.first else { return }
-            self?.userAnswered[selectedNodeTag] = selectedStateInfo
+            guard let strongSelf = self, let selectedNodeTag = strongSelf.selectedNode?.tag.first else { return }
+            strongSelf.userAnswered[selectedNodeTag] = selectedStateInfo
+            strongSelf.enterStateTextField.selectedArray = Array(strongSelf.userAnswered.values)
             DispatchQueue.main.async
             {
                 self?.selectedNode?.fill = StateColors.filledInColor
-                for (index, node) in Constants.stateDictionary.enumerated()
-                {
-                    if node.statAbbreviation == selectedStateInfo.statAbbreviation
-                    {
-                        // TODO: - unselect the old nodes somehow if user changes their answer for a state
-                        // maybe cross out the nodes in the userAnswered array instead of relying on .selected
-                        var newNodeInfo = node
-                        newNodeInfo.selected = true
-                        Constants.stateDictionary[index] = newNodeInfo
-                        self?.enterStateTextField.optionArray = Constants.stateDictionary
-                        break
-                    }
-                }
             }
         }
     }
@@ -119,6 +107,7 @@ class ViewController: UIViewController
             DispatchQueue.main.async
             {
                 self?.enterStateTextField.text = ""
+                self?.enterStateTextField.searchText = ""
                 if nodeTag == "MI" { return }
                 let newNode = self?.svgMap.node.nodeBy(tag: nodeTag) as? Shape
                 if !(self?.selectedNode == newNode)

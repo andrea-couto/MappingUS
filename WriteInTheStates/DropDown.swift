@@ -3,7 +3,7 @@ import UIKit
 class DropDown: UITextField
 {
     var arrow : Arrow!
-    var table : UITableView!
+    var table : UITableView?
     var shadow : UIView!
     
     @IBInspectable var rowHeight: CGFloat = 30
@@ -56,9 +56,10 @@ class DropDown: UITextField
     {
         didSet
         {
-            self.dataArray = self.optionArray
+            dataArray = optionArray
         }
     }
+    var selectedArray = [StateInfo]()
     
     var optionIds : [Int]?
     
@@ -68,7 +69,7 @@ class DropDown: UITextField
         {
             if searchText == ""
             {
-                self.dataArray = self.optionArray
+                dataArray = optionArray
             }
             else
             {
@@ -78,7 +79,7 @@ class DropDown: UITextField
                 }
             }
             reSizeTable()
-            self.table.reloadData()
+            table?.reloadData()
         }
     }
     
@@ -106,14 +107,14 @@ class DropDown: UITextField
     {
         super.init(frame: frame)
         setupUI()
-        self.delegate = self
+        delegate = self
     }
     
     required init(coder aDecoder: NSCoder)
     {
         super.init(coder: aDecoder)!
         setupUI()
-        self.delegate = self
+        delegate = self
     }
     
     
@@ -125,7 +126,7 @@ class DropDown: UITextField
     
     func setupUI()
     {
-        let size = self.frame.height
+        let size = frame.height
         let rightView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: size, height: size))
         self.rightView = rightView
         self.rightViewMode = .always
@@ -135,35 +136,35 @@ class DropDown: UITextField
         arrow = Arrow(origin: CGPoint(x: center.x - arrowSize/2, y: center.y - arrowSize/2), size: arrowSize)
         arrowContainerView.addSubview(arrow)
         
-        self.backgroundView = UIView(frame: .zero)
-        self.backgroundView.backgroundColor = .clear
+        backgroundView = UIView(frame: .zero)
+        backgroundView.backgroundColor = .clear
         addGesture()
         if isSearchEnable && handleKeyboard
         {
             NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: nil)
             {
-                (notification)
+                [weak self] (notification)
                 in
-                if self.isFirstResponder
+                if self?.isFirstResponder ?? false
                 {
                     let userInfo:NSDictionary = notification.userInfo! as NSDictionary
                     let keyboardFrame:NSValue = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue
                     let keyboardRectangle = keyboardFrame.cgRectValue
-                    self.keyboardHeight = keyboardRectangle.height
-                    if !self.isSelected
+                    self?.keyboardHeight = keyboardRectangle.height
+                    if !(self?.isSelected ?? false)
                     {
-                        self.showList()
+                        self?.showList()
                     }
                 }
                 
             }
             NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: nil)
             {
-                (notification)
+                [weak self] (notification)
                 in
-                if self.isFirstResponder
+                if self?.isFirstResponder ?? false
                 {
-                    self.keyboardHeight = 0
+                    self?.keyboardHeight = 0
                 }
             }
         }
@@ -180,14 +181,14 @@ class DropDown: UITextField
         let gesture =  UITapGestureRecognizer(target: self, action:  #selector(touchAction))
         if isSearchEnable
         {
-            self.rightView?.addGestureRecognizer(gesture)
+            rightView?.addGestureRecognizer(gesture)
         }
         else
         {
-            self.addGestureRecognizer(gesture)
+            addGestureRecognizer(gesture)
         }
         let gesture2 =  UITapGestureRecognizer(target: self, action:  #selector(touchAction))
-        self.backgroundView.addGestureRecognizer(gesture2)
+        backgroundView.addGestureRecognizer(gesture2)
     }
     
     func getConvertedPoint(_ targetView: UIView, baseView: UIView?)->CGPoint
@@ -217,7 +218,7 @@ class DropDown: UITextField
     {
         if parentController == nil
         {
-            parentController = self.parentViewController
+            parentController = parentViewController
         }
         backgroundView.frame = parentController?.view.frame ?? backgroundView.frame
         pointToParent = getConvertedPoint(self, baseView: parentController?.view)
@@ -225,16 +226,16 @@ class DropDown: UITextField
         TableWillAppearCompletion()
         if listHeight > rowHeight * CGFloat( dataArray.count)
         {
-            self.tableheightX = rowHeight * CGFloat(dataArray.count)
+            tableheightX = rowHeight * CGFloat(dataArray.count)
         }
         else
         {
-            self.tableheightX = listHeight
+            tableheightX = listHeight
         }
-        table = UITableView(frame: CGRect(x: pointToParent.x ,
+        let table = UITableView(frame: CGRect(x: pointToParent.x ,
                                           y: pointToParent.y + self.frame.height ,
-                                          width: self.frame.width,
-                                          height: self.frame.height))
+                                          width: frame.width,
+                                          height: frame.height))
         shadow = UIView(frame: table.frame)
         shadow.backgroundColor = .clear
         
@@ -247,33 +248,34 @@ class DropDown: UITextField
         table.rowHeight = rowHeight
         parentController?.view.addSubview(shadow)
         parentController?.view.addSubview(table)
-        self.isSelected = true
-        let height = (self.parentController?.view.frame.height ?? 0) - (self.pointToParent.y + self.frame.height + 5)
-        var y = self.pointToParent.y+self.frame.height+5
+        isSelected = true
+        let height = (parentController?.view.frame.height ?? 0) - (pointToParent.y + frame.height + 5)
+        var y = pointToParent.y + frame.height+5
         if height < (keyboardHeight+tableheightX)
         {
-            y = self.pointToParent.y - tableheightX
+            y = pointToParent.y - tableheightX
         }
+        self.table = table
         UIView.animate(withDuration: 0.3,
                        animations:
                         {
-                            () -> Void
+                            [weak self] () -> Void
                             in
-                            
-                            self.table.frame = CGRect(x: self.pointToParent.x,
-                                                      y: y,
-                                                      width: self.frame.width,
-                                                      height: self.tableheightX)
-                            self.table.alpha = 1
-                            self.shadow.frame = self.table.frame
-                            self.shadow.dropShadow()
-                            self.arrow.position = .up
+                            guard let strongSelf = self else { return }
+                            strongSelf.table?.frame = CGRect(x: strongSelf.pointToParent.x,
+                                                             y: y,
+                                                             width: strongSelf.frame.width,
+                                                             height: strongSelf.tableheightX)
+                            strongSelf.table?.alpha = 1
+                            strongSelf.shadow.frame = strongSelf.table?.frame ?? .zero
+                            strongSelf.shadow.dropShadow()
+                            strongSelf.arrow.position = .up
                         },
                        completion:
                         {
-                            (finish) -> Void
+                            [weak self] (finish) -> Void
                             in
-                            self.layoutIfNeeded()
+                            self?.layoutIfNeeded()
                         })
     }
     
@@ -283,22 +285,23 @@ class DropDown: UITextField
         UIView.animate(withDuration: 0.3,
                        animations:
                         {
-                            () -> Void
+                            [weak self] () -> Void
                             in
-                            self.table.frame = CGRect(x: self.pointToParent.x,
-                                                      y: self.pointToParent.y+self.frame.height,
-                                                      width: self.frame.width,
-                                                      height: 0)
-                            self.shadow.alpha = 0
-                            self.shadow.frame = self.table.frame
-                            self.arrow.position = .down
+                            guard let strongSelf = self else { return }
+                            strongSelf.table?.frame = CGRect(x: strongSelf.pointToParent.x,
+                                                            y: strongSelf.pointToParent.y + strongSelf.frame.height,
+                                                            width: strongSelf.frame.width,
+                                                            height: 0)
+                            strongSelf.shadow.alpha = 0
+                            strongSelf.shadow.frame = strongSelf.table?.frame ?? .zero
+                            strongSelf.arrow.position = .down
                         },
                        completion:
                         {
                             (didFinish) -> Void
                             in
                             self.shadow.removeFromSuperview()
-                            self.table.removeFromSuperview()
+                            self.table?.removeFromSuperview()
                             self.backgroundView.removeFromSuperview()
                             self.isSelected = false
                             self.TableDidDisappearCompletion()
@@ -312,19 +315,20 @@ class DropDown: UITextField
     
     func reSizeTable()
     {
+        guard table != nil else { return }
         if listHeight > rowHeight * CGFloat( dataArray.count)
         {
-            self.tableheightX = rowHeight * CGFloat(dataArray.count)
+            tableheightX = rowHeight * CGFloat(dataArray.count)
         }
         else
         {
-            self.tableheightX = listHeight
+            tableheightX = listHeight
         }
-        let height = (self.parentController?.view.frame.height ?? 0) - (self.pointToParent.y + self.frame.height + 5)
-        var y = self.pointToParent.y+self.frame.height+5
+        let height = (parentController?.view.frame.height ?? 0) - (pointToParent.y + frame.height + 5)
+        var y = pointToParent.y + frame.height+5
         if height < (keyboardHeight+tableheightX)
         {
-            y = self.pointToParent.y - tableheightX
+            y = pointToParent.y - tableheightX
         }
         UIView.animate(withDuration: 0.2,
                        delay: 0.1,
@@ -333,20 +337,21 @@ class DropDown: UITextField
                        options: .curveEaseInOut,
                        animations:
                         {
-                            () -> Void
+                            [weak self] () -> Void
                             in
-                            self.table.frame = CGRect(x: self.pointToParent.x,
-                                                      y: y,
-                                                      width: self.frame.width,
-                                                      height: self.tableheightX)
-                            self.shadow.frame = self.table.frame
-                            self.shadow.dropShadow()
+                            guard let strongSelf = self else { return }
+                            strongSelf.table?.frame = CGRect(x: strongSelf.pointToParent.x,
+                                                             y: y,
+                                                             width: strongSelf.frame.width,
+                                                             height: strongSelf.tableheightX)
+                            strongSelf.shadow.frame = strongSelf.table?.frame ?? .zero
+                            strongSelf.shadow.dropShadow()
                         },
                        completion:
                         {
-                            (didFinish) -> Void
+                            [weak self] (didFinish) -> Void
                             in
-                            self.layoutIfNeeded()
+                            self?.layoutIfNeeded()
                         })
     }
     
@@ -402,12 +407,12 @@ extension DropDown : UITextFieldDelegate
     {
         if string != ""
         {
-            self.searchText = self.text! + string
+            searchText = text! + string
         }
         else
         {
-            let subText = self.text?.dropLast()
-            self.searchText = String(subText!)
+            let subText = text?.dropLast()
+            searchText = String(subText!)
         }
         if !isSelected
         {
@@ -430,8 +435,8 @@ extension DropDown: UITableViewDataSource
         let cellIdentifier = "DropDownCell"
         let stateInfoForCell = dataArray[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) ?? UITableViewCell(style: .default, reuseIdentifier: cellIdentifier)
-        cell.backgroundColor = stateInfoForCell.selected ? .lightGray : .white
-        if self.imageArray.count > indexPath.row
+        cell.backgroundColor = selectedArray.contains(where: { $0.stateName == stateInfoForCell.stateName }) ? .lightGray : .white
+        if imageArray.count > indexPath.row
         {
             cell.imageView!.image = UIImage(named: imageArray[indexPath.row])
         }
@@ -440,11 +445,11 @@ extension DropDown: UITableViewDataSource
             NSAttributedString.Key.strikethroughStyle: NSUnderlineStyle.single.rawValue
         ]
         let strokeString = NSAttributedString(string: "\(stateInfoForCell.stateName)", attributes: strokeEffect)
-        cell.textLabel?.attributedText = stateInfoForCell.selected ? strokeString : NSAttributedString(string: "\(stateInfoForCell.stateName)")
+        cell.textLabel?.attributedText = selectedArray.contains(where: { $0.stateName == stateInfoForCell.stateName }) ? strokeString : NSAttributedString(string: "\(stateInfoForCell.stateName)")
         
         cell.selectionStyle = .none
-        cell.textLabel?.font = self.font
-        cell.textLabel?.textAlignment = self.textAlignment
+        cell.textLabel?.font = font
+        cell.textLabel?.textAlignment = textAlignment
         cell.textLabel?.numberOfLines = 0
         cell.textLabel?.lineBreakMode = .byWordWrapping
         return cell
@@ -457,27 +462,27 @@ extension DropDown: UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
         let selectedIndex = (indexPath as NSIndexPath).row
-        let selectedText = self.dataArray[selectedIndex].stateName
+        let selectedText = dataArray[selectedIndex].stateName
         tableView.cellForRow(at: indexPath)?.alpha = 0
         UIView.animate(withDuration: 0.5,
                        animations:
                         {
-                            () -> Void
+                            [weak self] () -> Void
                             in
                             tableView.cellForRow(at: indexPath)?.alpha = 1.0
-                            tableView.cellForRow(at: indexPath)?.backgroundColor = self.selectedRowColor
+                            tableView.cellForRow(at: indexPath)?.backgroundColor = self?.selectedRowColor
                         },
                        completion:
                         {
-                            (didFinish) -> Void
+                            [weak self] (didFinish) -> Void
                             in
-                            self.text = "\(selectedText)"
+                            self?.text = "\(selectedText)"
                             tableView.reloadData()
                         })
         if hideOptionsWhenSelect
         {
             touchAction()
-            self.endEditing(true)
+            endEditing(true)
         }
         if let selectedIndex = optionArray.firstIndex(where: {$0.stateName == selectedText})
         {
@@ -520,13 +525,13 @@ class Arrow: UIView
             switch position
             {
             case .left:
-                self.transform = CGAffineTransform(rotationAngle: -CGFloat.pi/2)
+                transform = CGAffineTransform(rotationAngle: -CGFloat.pi/2)
             case .down:
-                self.transform = CGAffineTransform(rotationAngle: CGFloat.pi*2)
+                transform = CGAffineTransform(rotationAngle: CGFloat.pi*2)
             case .right:
-                self.transform = CGAffineTransform(rotationAngle: CGFloat.pi/2)
+                transform = CGAffineTransform(rotationAngle: CGFloat.pi/2)
             case .up:
-                self.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+                transform = CGAffineTransform(rotationAngle: CGFloat.pi)
             }
         }
     }
@@ -543,7 +548,7 @@ class Arrow: UIView
     
     override func draw(_ rect: CGRect)
     {
-        let size = self.layer.frame.width
+        let size = layer.frame.width
         let bezierPath = UIBezierPath()
         let qSize = size/4
         bezierPath.move(to: CGPoint(x: 0, y: qSize))
@@ -554,11 +559,11 @@ class Arrow: UIView
         shapeLayer.path = bezierPath.cgPath
         if #available(iOS 12.0, *)
         {
-            self.layer.addSublayer (shapeLayer)
+            layer.addSublayer (shapeLayer)
         }
         else
         {
-            self.layer.mask = shapeLayer
+            layer.mask = shapeLayer
         }
     }
 }
@@ -579,14 +584,14 @@ extension UIView
     
     func viewBorder(borderColor : UIColor, borderWidth : CGFloat?)
     {
-        self.layer.borderColor = borderColor.cgColor
+        layer.borderColor = borderColor.cgColor
         if let borderWidth_ = borderWidth
         {
-            self.layer.borderWidth = borderWidth_
+            layer.borderWidth = borderWidth_
         }
         else
         {
-            self.layer.borderWidth = 1.0
+            layer.borderWidth = 1.0
         }
     }
     

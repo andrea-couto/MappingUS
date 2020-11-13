@@ -2,12 +2,11 @@ struct StateInfo
 {
     let statAbbreviation: String
     let stateName: String
-    var selected: Bool = false
 }
 
 struct Constants
 {
-    static var stateDictionary: [StateInfo] =
+    static let stateDictionary: [StateInfo] =
     [
         StateInfo(statAbbreviation: "AK", stateName: "Alaska"),
         StateInfo(statAbbreviation: "AL", stateName: "Alabama"),
