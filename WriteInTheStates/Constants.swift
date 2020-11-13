@@ -4,8 +4,20 @@ struct StateInfo
     let stateName: String
 }
 
+struct MichiganNode
+{
+    let nodeTag: String
+    let alternateTag: String
+}
+
 struct Constants
 {
+    static let michiganTags =
+    [
+        MichiganNode(nodeTag: "MI-", alternateTag: "SP-"),
+        MichiganNode(nodeTag: "SP-", alternateTag: "MI-")
+    ]
+
     static let stateDictionary: [StateInfo] =
     [
         StateInfo(stateAbbreviation: "AK", stateName: "Alaska"),
@@ -30,7 +42,6 @@ struct Constants
         StateInfo(stateAbbreviation: "MD", stateName: "Maryland"),
         StateInfo(stateAbbreviation: "ME", stateName: "Maine"),
         StateInfo(stateAbbreviation: "MI-", stateName: "Michigan"),
-        StateInfo(stateAbbreviation: "SP-", stateName: "Michigan Upper Peninsula"),
         StateInfo(stateAbbreviation: "MN", stateName: "Minnesota"),
         StateInfo(stateAbbreviation: "MO", stateName: "Missouri"),
         StateInfo(stateAbbreviation: "MS", stateName: "Mississippi"),

@@ -14,10 +14,10 @@ class ViewController: UIViewController
     // issue: - open the list in landscape, turn to portrait, list will not adjust
     
     
-    // TODO: - Tap a state to get started
+    // TODO: - Tap a state to get started if first launch
     // TODO: - restart button
     // TODO: - selecting a new state name for the same node will not clear out old guess
-    // might result in state being wrong even when the guess was changed. 
+    // might result in state being wrong even when the guess was changed.
     
     private var pathArray = [String]()
     private var selectedNode: Shape?
@@ -58,9 +58,18 @@ class ViewController: UIViewController
             guard let strongSelf = self, let selectedNodeTag = strongSelf.selectedNode?.tag.first else { return }
             strongSelf.userAnswered[selectedNodeTag] = selectedStateInfo
             strongSelf.enterStateTextField.selectedArray = Array(strongSelf.userAnswered.values)
+            var alternateMichiganShape: Shape?
+            Constants.michiganTags.forEach
+            {
+                if $0.nodeTag == selectedNodeTag
+                {
+                    alternateMichiganShape = strongSelf.svgMap.node.nodeBy(tag: $0.alternateTag) as? Shape
+                }
+            }
             DispatchQueue.main.async
             {
                 self?.selectedNode?.fill = StateColors.filledInColor
+                alternateMichiganShape?.fill = StateColors.filledInColor
             }
         }
     }
@@ -128,19 +137,30 @@ class ViewController: UIViewController
                 self?.enterStateTextField.text = ""
                 self?.enterStateTextField.searchText = ""
                 if nodeTag == "MI" { return }
+                var alternateMichiganShape: Shape?
+                Constants.michiganTags.forEach
+                {
+                    if $0.nodeTag == nodeTag
+                    {
+                        alternateMichiganShape = self?.svgMap.node.nodeBy(tag: $0.alternateTag) as? Shape
+                    }
+                }
                 let newNode = self?.svgMap.node.nodeBy(tag: nodeTag) as? Shape
                 if !(self?.selectedNode == newNode)
                 {
                     if self?.selectedNode?.fill == StateColors.selectedColor
                     {
+                        alternateMichiganShape?.fill = StateColors.defaultColor
                         self?.selectedNode?.fill = StateColors.defaultColor // reset previous node color
                     }
                     self?.selectedNode = newNode
+                    alternateMichiganShape?.fill = StateColors.selectedColor
                     self?.selectedNode?.fill = StateColors.selectedColor
                     self?.toggleEnterStateView(isHidden: false)
                 }
                 else
                 {
+                    alternateMichiganShape?.fill = StateColors.defaultColor
                     self?.selectedNode?.fill = StateColors.defaultColor
                     self?.selectedNode = nil
                     self?.toggleEnterStateView(isHidden: true)
@@ -155,13 +175,23 @@ class ViewController: UIViewController
         {
             if let node = svgMap.node.nodeBy(tag: item.key) as? Shape
             {
+                var alternateMichiganShape: Shape?
+                Constants.michiganTags.forEach
+                {
+                    if $0.nodeTag == node.tag.first
+                    {
+                        alternateMichiganShape = svgMap.node.nodeBy(tag: $0.alternateTag) as? Shape
+                    }
+                }
                 if node.tag.first == item.value.stateAbbreviation
                 {
                     node.fill = Color.green
+                    alternateMichiganShape?.fill = Color.green
                 }
                 else
                 {
                     node.fill = Color.red
+                    alternateMichiganShape?.fill = Color.red
                 }
             }
         }
@@ -174,6 +204,4 @@ class ViewController: UIViewController
         enterStateTextField.text = stateInfoForSelectedNode?.stateName
         enterStateTextField.searchText = stateInfoForSelectedNode?.stateName ?? ""
     }
-    
-    // TODO: - special handling for MI - grab "SP-" & "MI-" to fill as one shape
 }
