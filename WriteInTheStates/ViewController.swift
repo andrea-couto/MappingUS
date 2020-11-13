@@ -132,7 +132,21 @@ class ViewController: UIViewController
     
     @IBAction func didTapShowResults()
     {
-        // TODO: - handle showing the results to the user
+        // TODO: - toggle to Hide Results on tap 
+        for item in userAnswered
+        {
+            if let node = svgMap.node.nodeBy(tag: item.key) as? Shape
+            {
+                if node.tag.first == item.value.stateAbbreviation
+                {
+                    node.fill = Color.green
+                }
+                else
+                {
+                    node.fill = Color.red
+                }
+            }
+        }
     }
     
     @IBAction func didTapShowState()
