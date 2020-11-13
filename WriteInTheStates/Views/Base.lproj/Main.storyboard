@@ -25,20 +25,34 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VFU-WE-JlS">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="134.5"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter State Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rXl-32-X46" customClass="DropDown" customModule="WriteInTheStates" customModuleProvider="target">
-                                        <rect key="frame" x="25" y="50" width="364" height="34"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="checkMarkEnabled" value="NO"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </textField>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Nq4-54-V6b">
+                                        <rect key="frame" x="25" y="0.0" width="364" height="134.5"/>
+                                        <subviews>
+                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter State Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rXl-32-X46" customClass="DropDown" customModule="WriteInTheStates" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="50" width="229.5" height="34"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="checkMarkEnabled" value="NO"/>
+                                                </userDefinedRuntimeAttributes>
+                                            </textField>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q4V-7W-C5b">
+                                                <rect key="frame" x="234.5" y="52" width="129.5" height="30"/>
+                                                <state key="normal" title="Show State"/>
+                                                <connections>
+                                                    <action selector="didTapShowState" destination="BYZ-38-t0r" eventType="touchUpInside" id="FX4-rL-Uwl"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </stackView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="rXl-32-X46" firstAttribute="width" secondItem="VFU-WE-JlS" secondAttribute="width" multiplier="0.88" id="7bg-jF-vD1"/>
-                                    <constraint firstItem="rXl-32-X46" firstAttribute="centerY" secondItem="VFU-WE-JlS" secondAttribute="centerY" id="AFv-My-lvB"/>
-                                    <constraint firstItem="rXl-32-X46" firstAttribute="centerX" secondItem="VFU-WE-JlS" secondAttribute="centerX" id="a2i-DK-jmk"/>
+                                    <constraint firstAttribute="trailing" secondItem="Nq4-54-V6b" secondAttribute="trailing" constant="25" id="8Vx-vb-33q"/>
+                                    <constraint firstItem="Nq4-54-V6b" firstAttribute="leading" secondItem="VFU-WE-JlS" secondAttribute="leading" constant="25" id="Z2B-Kw-o9z"/>
+                                    <constraint firstAttribute="bottom" secondItem="Nq4-54-V6b" secondAttribute="bottom" id="qHc-Yj-vrd"/>
+                                    <constraint firstItem="Nq4-54-V6b" firstAttribute="top" secondItem="VFU-WE-JlS" secondAttribute="top" id="tLj-Tk-81X"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qc2-I0-y4x">
@@ -73,6 +87,7 @@
                         <outlet property="enterStateTextField" destination="rXl-32-X46" id="8Zm-rZ-nwF"/>
                         <outlet property="enterStateView" destination="VFU-WE-JlS" id="bsl-nA-Tyj"/>
                         <outlet property="showResultsButton" destination="Qc2-I0-y4x" id="bAe-ub-AXv"/>
+                        <outlet property="showStateButton" destination="q4V-7W-C5b" id="Q8n-Al-dav"/>
                         <outlet property="svgMap" destination="JCf-Lr-T7t" id="oMP-Zv-jku"/>
                     </connections>
                 </viewController>

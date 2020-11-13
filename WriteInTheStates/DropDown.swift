@@ -254,11 +254,7 @@ class DropDown: UITextField
         {
             y = self.pointToParent.y - tableheightX
         }
-        UIView.animate(withDuration: 0.9,
-                       delay: 0,
-                       usingSpringWithDamping: 0.4,
-                       initialSpringVelocity: 0.1,
-                       options: .curveEaseInOut,
+        UIView.animate(withDuration: 0.3,
                        animations:
                         {
                             () -> Void
@@ -284,11 +280,7 @@ class DropDown: UITextField
     func hideList()
     {
         TableWillDisappearCompletion()
-        UIView.animate(withDuration: 1.0,
-                       delay: 0.4,
-                       usingSpringWithDamping: 0.9,
-                       initialSpringVelocity: 0.1,
-                       options: .curveEaseInOut,
+        UIView.animate(withDuration: 0.3,
                        animations:
                         {
                             () -> Void
@@ -424,6 +416,7 @@ extension DropDown : UITextFieldDelegate
         return true
     }
 }
+
 ///MARK: UITableViewDataSource
 extension DropDown: UITableViewDataSource
 {
@@ -528,19 +521,12 @@ class Arrow: UIView
             {
             case .left:
                 self.transform = CGAffineTransform(rotationAngle: -CGFloat.pi/2)
-                break
-                
             case .down:
                 self.transform = CGAffineTransform(rotationAngle: CGFloat.pi*2)
-                break
-                
             case .right:
                 self.transform = CGAffineTransform(rotationAngle: CGFloat.pi/2)
-                break
-                
             case .up:
                 self.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
-                break
             }
         }
     }
@@ -557,16 +543,9 @@ class Arrow: UIView
     
     override func draw(_ rect: CGRect)
     {
-        
-        // Get size
         let size = self.layer.frame.width
-        
-        // Create path
         let bezierPath = UIBezierPath()
-        
-        // Draw points
         let qSize = size/4
-        
         bezierPath.move(to: CGPoint(x: 0, y: qSize))
         bezierPath.addLine(to: CGPoint(x: size, y: qSize))
         bezierPath.addLine(to: CGPoint(x: size/2, y: qSize*3))

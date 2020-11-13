@@ -8,10 +8,10 @@ class ViewController: UIViewController
     @IBOutlet private weak var enterStateView: UIView!
     @IBOutlet private weak var enterStateTextField: DropDown!
     @IBOutlet private weak var showResultsButton: UIButton!
-    
-    // TODO:- Need a legend at the bottom with what the colors mean
-    // also add a [show results] or something that will change the user answered states to red or green based on if they are correct
-    // maybe also a [show states] maybe that will overlay a state map SVG?
+    @IBOutlet private weak var showStateButton: UIButton!
+        
+    // TODO: - when device is flipped close the dropdown list
+    // issue: - open the list in landscape, turn to portrait, list will not adjust
     
     private var pathArray = [String]()
     private var selectedNode: Shape?
@@ -33,7 +33,7 @@ class ViewController: UIViewController
         svgMap.zoom.enable()
         enterStateTextField.optionArray = Constants.stateDictionary
         enterStateView.isHidden = true
-        configureShowResultButton()
+        configureButtons()
         enterStateTextField.didSelect
         {
             [weak self] (selectedStateInfo, index, id)
@@ -45,8 +45,10 @@ class ViewController: UIViewController
                 self?.selectedNode?.fill = StateColors.filledInColor
                 for (index, node) in Constants.stateDictionary.enumerated()
                 {
-                    if node.statAbbreviation == selectedNodeTag
+                    if node.statAbbreviation == selectedStateInfo.statAbbreviation
                     {
+                        // TODO: - unselect the old nodes somehow if user changes their answer for a state
+                        // maybe cross out the nodes in the userAnswered array instead of relying on .selected
                         var newNodeInfo = node
                         newNodeInfo.selected = true
                         Constants.stateDictionary[index] = newNodeInfo
@@ -58,12 +60,17 @@ class ViewController: UIViewController
         }
     }
     
-    private func configureShowResultButton()
+    private func configureButtons()
     {
         showResultsButton.backgroundColor = .clear
         showResultsButton.layer.cornerRadius = 5
         showResultsButton.layer.borderWidth = 1
         showResultsButton.layer.borderColor = UIColor.black.cgColor
+        
+        showStateButton.backgroundColor = .clear
+        showStateButton.layer.cornerRadius = 5
+        showStateButton.layer.borderWidth = 1
+        showStateButton.layer.borderColor = UIColor.black.cgColor
     }
     
     func toggleEnterStateView(isHidden: Bool)
@@ -137,6 +144,11 @@ class ViewController: UIViewController
     @IBAction func didTapShowResults()
     {
         // TODO: - handle showing the results to the user
+    }
+    
+    @IBAction func didTapShowState()
+    {
+        // TODO: - handle showing the state name to the user
     }
     
     // TODO: - special handling for MI - grab "SP-" & "MI-" to fill as one shape
