@@ -13,6 +13,12 @@ class ViewController: UIViewController
     // TODO: - when device is flipped close the dropdown list
     // issue: - open the list in landscape, turn to portrait, list will not adjust
     
+    
+    // TODO: - Tap a state to get started
+    // TODO: - restart button
+    // TODO: - selecting a new state name for the same node will not clear out old guess
+    // might result in state being wrong even when the guess was changed. 
+    
     private var pathArray = [String]()
     private var selectedNode: Shape?
     
