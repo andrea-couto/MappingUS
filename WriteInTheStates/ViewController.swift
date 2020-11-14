@@ -9,13 +9,12 @@ class ViewController: UIViewController
     @IBOutlet private weak var enterStateTextField: DropDown!
     @IBOutlet private weak var showResultsButton: UIButton!
     @IBOutlet private weak var showStateButton: UIButton!
-        
+    @IBOutlet private weak var startOverButton: UIButton!
+    
     // TODO: - when device is flipped close the dropdown list
     // issue: - open the list in landscape, turn to portrait, list will not adjust
     
-    
     // TODO: - Tap a state to get started if first launch
-    // TODO: - restart button
     // TODO: - selecting a new state name for the same node will not clear out old guess
     // might result in state being wrong even when the guess was changed.
     
@@ -82,6 +81,11 @@ class ViewController: UIViewController
         showResultsButton.layer.borderColor = UIColor.black.cgColor
         showResultsButton.isEnabled = false
         showResultsButton.alpha = 0.5
+        
+        startOverButton.backgroundColor = .clear
+        startOverButton.layer.cornerRadius = 5
+        startOverButton.layer.borderWidth = 1
+        startOverButton.layer.borderColor = UIColor.black.cgColor
         
         showStateButton.backgroundColor = .clear
         showStateButton.layer.cornerRadius = 5
@@ -203,5 +207,28 @@ class ViewController: UIViewController
         let stateInfoForSelectedNode = Constants.stateDictionary.first(where: { $0.stateAbbreviation == selectedNode.tag.first })
         enterStateTextField.text = stateInfoForSelectedNode?.stateName
         enterStateTextField.searchText = stateInfoForSelectedNode?.stateName ?? ""
+    }
+    
+    @IBAction func didTapStartOver()
+    {
+        for item in userAnswered
+        {
+            if let node = svgMap.node.nodeBy(tag: item.key) as? Shape
+            {
+                var alternateMichiganShape: Shape?
+                Constants.michiganTags.forEach
+                {
+                    if $0.nodeTag == node.tag.first
+                    {
+                        alternateMichiganShape = svgMap.node.nodeBy(tag: $0.alternateTag) as? Shape
+                    }
+                }
+                node.fill = StateColors.defaultColor
+                alternateMichiganShape?.fill = StateColors.defaultColor
+            }
+        }
+        userAnswered = [:]
+        selectedNode = nil
+        enterStateTextField.selectedArray = []
     }
 }
