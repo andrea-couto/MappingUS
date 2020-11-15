@@ -17,5 +17,7 @@ Mapping US is an app for practicing your knowledge of States in America.
 - iOS 14.0
 - Xcode 12.0
 
+[Privacy Policy](privacyPolicy.html)
+
 [swift-image]:https://img.shields.io/badge/swift-5.0-orange.svg
 [swift-url]: https://swift.org/
