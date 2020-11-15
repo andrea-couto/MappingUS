@@ -265,6 +265,7 @@ class ViewController: UIViewController
     @IBAction private func didTapClear()
     {
         userAnswered[selectedNode?.tag.first ?? ""] = nil
+        enterStateTextField.selectedArray = Array(userAnswered.values)
         selectedNode?.fill = StateColors.defaultColor
         selectedNode = nil
     }
