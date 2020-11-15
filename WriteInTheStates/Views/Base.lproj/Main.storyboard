@@ -44,7 +44,7 @@
                                         <rect key="frame" x="25" y="0.0" width="364" height="134.5"/>
                                         <subviews>
                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter State Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rXl-32-X46" customClass="DropDown" customModule="WriteInTheStates" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="50" width="229.5" height="34"/>
+                                                <rect key="frame" x="0.0" y="50" width="194" height="34"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -55,10 +55,17 @@
                                                 </userDefinedRuntimeAttributes>
                                             </textField>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q4V-7W-C5b">
-                                                <rect key="frame" x="234.5" y="52" width="129.5" height="30"/>
+                                                <rect key="frame" x="199" y="52" width="107" height="30"/>
                                                 <state key="normal" title="Show State"/>
                                                 <connections>
                                                     <action selector="didTapShowState" destination="BYZ-38-t0r" eventType="touchUpInside" id="FX4-rL-Uwl"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PwR-PC-8ZZ">
+                                                <rect key="frame" x="311" y="52" width="53" height="30"/>
+                                                <state key="normal" title="Clear"/>
+                                                <connections>
+                                                    <action selector="didTapClear" destination="BYZ-38-t0r" eventType="touchUpInside" id="GFr-mk-idZ"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -122,6 +129,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="clearStateButton" destination="PwR-PC-8ZZ" id="IfX-Vt-08Y"/>
                         <outlet property="enterStateTextField" destination="rXl-32-X46" id="8Zm-rZ-nwF"/>
                         <outlet property="enterStateView" destination="VFU-WE-JlS" id="bsl-nA-Tyj"/>
                         <outlet property="getStartedView" destination="Fev-77-idu" id="fVx-U0-yiO"/>

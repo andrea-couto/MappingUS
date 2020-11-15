@@ -11,11 +11,13 @@ class ViewController: UIViewController
     @IBOutlet private weak var showStateButton: UIButton!
     @IBOutlet private weak var startOverButton: UIButton!
     @IBOutlet private weak var getStartedView: UIView!
-        
+    @IBOutlet private weak var clearStateButton: UIButton!
+    
     private var pathArray = [String]()
     private var selectedNode: Shape?
+    private let stateNodeTags = Constants.stateDictionary.map({ $0.stateAbbreviation })
     
-    // TODO: - when a user selects one of these Nodes the textfield should be pre-filled with their guess for state name
+    /// tag for the state they guessed at : user's guess
     private var userAnswered: [String: StateInfo] = [:]
     {
         didSet
@@ -41,7 +43,7 @@ class ViewController: UIViewController
         return alternateMichiganShape
     }
     
-    struct StateColors
+    private struct StateColors
     {
         static let filledInColor = Color.darkGoldenrod
         static let defaultColor = Color.lightGray
@@ -87,13 +89,18 @@ class ViewController: UIViewController
         startOverButton.layer.borderWidth = 1
         startOverButton.layer.borderColor = UIColor.black.cgColor
         
+        clearStateButton.backgroundColor = .clear
+        clearStateButton.layer.cornerRadius = 5
+        clearStateButton.layer.borderWidth = 1
+        clearStateButton.layer.borderColor = UIColor.black.cgColor
+        
         showStateButton.backgroundColor = .clear
         showStateButton.layer.cornerRadius = 5
         showStateButton.layer.borderWidth = 1
         showStateButton.layer.borderColor = UIColor.black.cgColor
     }
     
-    func toggleEnterStateView(isHidden: Bool)
+    private func toggleEnterStateView(isHidden: Bool)
     {
         isHidden ? enterStateView.fadeOut() : enterStateView.fadeIn()
     }
@@ -138,35 +145,67 @@ class ViewController: UIViewController
             in
             DispatchQueue.main.async
             {
-                self?.enterStateTextField.text = ""
-                self?.enterStateTextField.searchText = ""
+                guard let strongSelf = self, strongSelf.stateNodeTags.contains(nodeTag) else { return }
                 if nodeTag == "MI" { return }
+                
                 // if the tapped node is michigan
-                let alternateMichiganShapeForTappedNode = self?.getAlternateMichiganShape(currentNodeTag: nodeTag)
+                let alternateMichiganShapeForTappedNode = strongSelf.getAlternateMichiganShape(currentNodeTag: nodeTag)
                 // or the last tapped node is michigan
                 var alternateMichiganShapeForLastSelectedNode: Shape?
                 if alternateMichiganShapeForTappedNode == nil
                 {
-                    alternateMichiganShapeForLastSelectedNode = self?.getAlternateMichiganShape(currentNodeTag: self?.selectedNode?.tag.first ?? "")
+                    alternateMichiganShapeForLastSelectedNode = strongSelf.getAlternateMichiganShape(currentNodeTag: self?.selectedNode?.tag.first ?? "")
                 }
-                let newNode = self?.svgMap.node.nodeBy(tag: nodeTag) as? Shape
-                if !(self?.selectedNode == newNode)
+                
+                let newNode = strongSelf.svgMap.node.nodeBy(tag: nodeTag) as? Shape
+                
+                // if the user is tapping on a state that they guessed at show them their guess
+                if strongSelf.userAnswered.keys.contains(nodeTag)
                 {
-                    if self?.selectedNode?.fill == StateColors.selectedColor
-                    {
-                        alternateMichiganShapeForLastSelectedNode?.fill = StateColors.defaultColor
-                        self?.selectedNode?.fill = StateColors.defaultColor // reset previous node color
-                    }
-                    self?.selectedNode = newNode
-                    alternateMichiganShapeForTappedNode?.fill = StateColors.selectedColor
-                    self?.selectedNode?.fill = StateColors.selectedColor
-                    self?.toggleEnterStateView(isHidden: false)
-                    self?.getStartedView.isHidden = true
+                    strongSelf.enterStateTextField.text = strongSelf.userAnswered[nodeTag]?.stateName ?? ""
+                    strongSelf.enterStateTextField.searchText = strongSelf.userAnswered[nodeTag]?.stateName ?? ""
                 }
                 else
                 {
-                    alternateMichiganShapeForTappedNode?.fill = StateColors.defaultColor
-                    self?.selectedNode?.fill = StateColors.defaultColor
+                    strongSelf.enterStateTextField.text = ""
+                    strongSelf.enterStateTextField.searchText = ""
+                }
+                
+                if !(strongSelf.selectedNode == newNode)
+                {
+                    if strongSelf.selectedNode?.fill == StateColors.selectedColor
+                    {
+                        // we dont want the state to be its initial color if the user has a guess for that state
+                        if !(strongSelf.userAnswered.keys.contains(strongSelf.selectedNode?.tag.first ?? ""))
+                        {
+                            alternateMichiganShapeForLastSelectedNode?.fill = StateColors.defaultColor
+                            strongSelf.selectedNode?.fill = StateColors.defaultColor // reset previous node color
+                        }
+                        else
+                        {
+                            alternateMichiganShapeForLastSelectedNode?.fill = StateColors.filledInColor
+                            strongSelf.selectedNode?.fill = StateColors.filledInColor // reset previous node color
+                        }
+                    }
+                    strongSelf.selectedNode = newNode
+                    alternateMichiganShapeForTappedNode?.fill = StateColors.selectedColor
+                    strongSelf.selectedNode?.fill = StateColors.selectedColor
+                    strongSelf.toggleEnterStateView(isHidden: false)
+                    strongSelf.getStartedView.isHidden = true
+                }
+                else
+                {
+                    // we dont want the state to be its initial color if the user has a guess for that state
+                    if !(strongSelf.userAnswered.keys.contains(strongSelf.selectedNode?.tag.first ?? ""))
+                    {
+                        alternateMichiganShapeForTappedNode?.fill = StateColors.defaultColor
+                        self?.selectedNode?.fill = StateColors.defaultColor
+                    }
+                    else
+                    {
+                        alternateMichiganShapeForTappedNode?.fill = StateColors.filledInColor
+                        self?.selectedNode?.fill = StateColors.filledInColor
+                    }
                     self?.selectedNode = nil
                     self?.toggleEnterStateView(isHidden: true)
                 }
@@ -174,7 +213,7 @@ class ViewController: UIViewController
         }
     }
     
-    @IBAction func didTapShowResults()
+    @IBAction private func didTapShowResults()
     {
         for item in userAnswered
         {
@@ -196,7 +235,7 @@ class ViewController: UIViewController
         }
     }
     
-    @IBAction func didTapShowState()
+    @IBAction private func didTapShowState()
     {
         guard let selectedNode = selectedNode else { return }
         let stateInfoForSelectedNode = Constants.stateDictionary.first(where: { $0.stateAbbreviation == selectedNode.tag.first })
@@ -204,7 +243,7 @@ class ViewController: UIViewController
         enterStateTextField.searchText = stateInfoForSelectedNode?.stateName ?? ""
     }
     
-    @IBAction func didTapStartOver()
+    @IBAction private func didTapStartOver()
     {
         for item in userAnswered
         {
@@ -216,7 +255,17 @@ class ViewController: UIViewController
             }
         }
         userAnswered = [:]
+        let alternateMichiganShape = getAlternateMichiganShape(currentNodeTag: selectedNode?.tag.first ?? "")
+        alternateMichiganShape?.fill = StateColors.defaultColor
+        selectedNode?.fill = StateColors.defaultColor
         selectedNode = nil
         enterStateTextField.selectedArray = []
+    }
+    
+    @IBAction private func didTapClear()
+    {
+        userAnswered[selectedNode?.tag.first ?? ""] = nil
+        selectedNode?.fill = StateColors.defaultColor
+        selectedNode = nil
     }
 }
