@@ -22,8 +22,8 @@ struct Constants
     [
         StateInfo(stateAbbreviation: "AK", stateName: "Alaska"),
         StateInfo(stateAbbreviation: "AL", stateName: "Alabama"),
-        StateInfo(stateAbbreviation: "AZ", stateName: "Arkansas"),
-        StateInfo(stateAbbreviation: "AK", stateName: "Arizona"),
+        StateInfo(stateAbbreviation: "AR", stateName: "Arkansas"),
+        StateInfo(stateAbbreviation: "AZ", stateName: "Arizona"),
         StateInfo(stateAbbreviation: "CA", stateName: "California"),
         StateInfo(stateAbbreviation: "CO", stateName: "Colorado"),
         StateInfo(stateAbbreviation: "CT", stateName: "Connecticut"),

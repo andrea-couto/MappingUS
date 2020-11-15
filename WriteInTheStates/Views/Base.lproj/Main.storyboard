@@ -22,6 +22,21 @@
                                     <userDefinedRuntimeAttribute type="string" keyPath="fileName" value="blank-us-map"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fev-77-idu" userLabel="Tap to Get Start View">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="134.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap a State to Get Started" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8EZ-qP-EsH">
+                                        <rect key="frame" x="108.5" y="57" width="197.5" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="8EZ-qP-EsH" firstAttribute="centerX" secondItem="Fev-77-idu" secondAttribute="centerX" id="7ms-q7-5NX"/>
+                                    <constraint firstItem="8EZ-qP-EsH" firstAttribute="centerY" secondItem="Fev-77-idu" secondAttribute="centerY" id="yam-Yn-Qhd"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VFU-WE-JlS">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="134.5"/>
                                 <subviews>
@@ -90,12 +105,16 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="Fev-77-idu" secondAttribute="trailing" id="4oV-Na-7F1"/>
                             <constraint firstItem="JCf-Lr-T7t" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="6Xe-kT-w4s"/>
                             <constraint firstItem="VFU-WE-JlS" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.15" id="JcI-aZ-OsL"/>
                             <constraint firstAttribute="trailing" secondItem="VFU-WE-JlS" secondAttribute="trailing" id="OXI-UV-Y5N"/>
+                            <constraint firstItem="Fev-77-idu" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="OXM-qL-mjE"/>
+                            <constraint firstItem="Fev-77-idu" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="SPo-tK-odY"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="r5b-PW-Q6g" secondAttribute="bottom" constant="20" id="Vl7-9b-i1X"/>
                             <constraint firstItem="JCf-Lr-T7t" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="WXo-HJ-Wsm"/>
                             <constraint firstItem="VFU-WE-JlS" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="WdY-Rq-g5y"/>
+                            <constraint firstItem="Fev-77-idu" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.15" id="b8B-Y8-5ad"/>
                             <constraint firstItem="r5b-PW-Q6g" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="dBF-nD-UCZ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="JCf-Lr-T7t" secondAttribute="bottom" id="nDQ-8X-chk"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="JCf-Lr-T7t" secondAttribute="trailing" id="nbC-Dx-BRF"/>
@@ -105,6 +124,7 @@
                     <connections>
                         <outlet property="enterStateTextField" destination="rXl-32-X46" id="8Zm-rZ-nwF"/>
                         <outlet property="enterStateView" destination="VFU-WE-JlS" id="bsl-nA-Tyj"/>
+                        <outlet property="getStartedView" destination="Fev-77-idu" id="fVx-U0-yiO"/>
                         <outlet property="showResultsButton" destination="Qc2-I0-y4x" id="bAe-ub-AXv"/>
                         <outlet property="showStateButton" destination="q4V-7W-C5b" id="Q8n-Al-dav"/>
                         <outlet property="startOverButton" destination="i16-Q0-l2O" id="dJJ-VH-IWu"/>

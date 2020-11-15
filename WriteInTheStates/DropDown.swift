@@ -126,6 +126,7 @@ class DropDown: UITextField
     
     func setupUI()
     {
+        NotificationCenter.default.addObserver(self, selector: #selector(deviceRotated), name: UIDevice.orientationDidChangeNotification, object: nil)
         let size = frame.height
         let rightView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: size, height: size))
         self.rightView = rightView
@@ -167,6 +168,14 @@ class DropDown: UITextField
                     self?.keyboardHeight = 0
                 }
             }
+        }
+    }
+    
+    @objc func deviceRotated()
+    {
+        if table != nil
+        {
+            hideList()
         }
     }
     

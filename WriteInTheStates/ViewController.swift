@@ -10,14 +10,8 @@ class ViewController: UIViewController
     @IBOutlet private weak var showResultsButton: UIButton!
     @IBOutlet private weak var showStateButton: UIButton!
     @IBOutlet private weak var startOverButton: UIButton!
-    
-    // TODO: - when device is flipped close the dropdown list
-    // issue: - open the list in landscape, turn to portrait, list will not adjust
-    
-    // TODO: - Tap a state to get started if first launch
-    // TODO: - selecting a new state name for the same node will not clear out old guess
-    // might result in state being wrong even when the guess was changed.
-    
+    @IBOutlet private weak var getStartedView: UIView!
+        
     private var pathArray = [String]()
     private var selectedNode: Shape?
     
@@ -32,6 +26,19 @@ class ViewController: UIViewController
                 showResultsButton.alpha = 1.0
             }
         }
+    }
+    
+    private func getAlternateMichiganShape(currentNodeTag: String) -> Shape?
+    {
+        var alternateMichiganShape: Shape?
+        Constants.michiganTags.forEach
+        {
+            if $0.nodeTag == currentNodeTag
+            {
+                alternateMichiganShape = svgMap.node.nodeBy(tag: $0.alternateTag) as? Shape
+            }
+        }
+        return alternateMichiganShape
     }
     
     struct StateColors
@@ -57,14 +64,7 @@ class ViewController: UIViewController
             guard let strongSelf = self, let selectedNodeTag = strongSelf.selectedNode?.tag.first else { return }
             strongSelf.userAnswered[selectedNodeTag] = selectedStateInfo
             strongSelf.enterStateTextField.selectedArray = Array(strongSelf.userAnswered.values)
-            var alternateMichiganShape: Shape?
-            Constants.michiganTags.forEach
-            {
-                if $0.nodeTag == selectedNodeTag
-                {
-                    alternateMichiganShape = strongSelf.svgMap.node.nodeBy(tag: $0.alternateTag) as? Shape
-                }
-            }
+            let alternateMichiganShape = strongSelf.getAlternateMichiganShape(currentNodeTag: selectedNodeTag)
             DispatchQueue.main.async
             {
                 self?.selectedNode?.fill = StateColors.filledInColor
@@ -141,30 +141,31 @@ class ViewController: UIViewController
                 self?.enterStateTextField.text = ""
                 self?.enterStateTextField.searchText = ""
                 if nodeTag == "MI" { return }
-                var alternateMichiganShape: Shape?
-                Constants.michiganTags.forEach
+                // if the tapped node is michigan
+                let alternateMichiganShapeForTappedNode = self?.getAlternateMichiganShape(currentNodeTag: nodeTag)
+                // or the last tapped node is michigan
+                var alternateMichiganShapeForLastSelectedNode: Shape?
+                if alternateMichiganShapeForTappedNode == nil
                 {
-                    if $0.nodeTag == nodeTag
-                    {
-                        alternateMichiganShape = self?.svgMap.node.nodeBy(tag: $0.alternateTag) as? Shape
-                    }
+                    alternateMichiganShapeForLastSelectedNode = self?.getAlternateMichiganShape(currentNodeTag: self?.selectedNode?.tag.first ?? "")
                 }
                 let newNode = self?.svgMap.node.nodeBy(tag: nodeTag) as? Shape
                 if !(self?.selectedNode == newNode)
                 {
                     if self?.selectedNode?.fill == StateColors.selectedColor
                     {
-                        alternateMichiganShape?.fill = StateColors.defaultColor
+                        alternateMichiganShapeForLastSelectedNode?.fill = StateColors.defaultColor
                         self?.selectedNode?.fill = StateColors.defaultColor // reset previous node color
                     }
                     self?.selectedNode = newNode
-                    alternateMichiganShape?.fill = StateColors.selectedColor
+                    alternateMichiganShapeForTappedNode?.fill = StateColors.selectedColor
                     self?.selectedNode?.fill = StateColors.selectedColor
                     self?.toggleEnterStateView(isHidden: false)
+                    self?.getStartedView.isHidden = true
                 }
                 else
                 {
-                    alternateMichiganShape?.fill = StateColors.defaultColor
+                    alternateMichiganShapeForTappedNode?.fill = StateColors.defaultColor
                     self?.selectedNode?.fill = StateColors.defaultColor
                     self?.selectedNode = nil
                     self?.toggleEnterStateView(isHidden: true)
@@ -179,15 +180,9 @@ class ViewController: UIViewController
         {
             if let node = svgMap.node.nodeBy(tag: item.key) as? Shape
             {
-                var alternateMichiganShape: Shape?
-                Constants.michiganTags.forEach
-                {
-                    if $0.nodeTag == node.tag.first
-                    {
-                        alternateMichiganShape = svgMap.node.nodeBy(tag: $0.alternateTag) as? Shape
-                    }
-                }
-                if node.tag.first == item.value.stateAbbreviation
+                let alternateMichiganShape = getAlternateMichiganShape(currentNodeTag: node.tag.first ?? "")
+                if (node.tag.first == item.value.stateAbbreviation) ||
+                    (alternateMichiganShape?.tag.first == item.value.stateAbbreviation)
                 {
                     node.fill = Color.green
                     alternateMichiganShape?.fill = Color.green
@@ -215,14 +210,7 @@ class ViewController: UIViewController
         {
             if let node = svgMap.node.nodeBy(tag: item.key) as? Shape
             {
-                var alternateMichiganShape: Shape?
-                Constants.michiganTags.forEach
-                {
-                    if $0.nodeTag == node.tag.first
-                    {
-                        alternateMichiganShape = svgMap.node.nodeBy(tag: $0.alternateTag) as? Shape
-                    }
-                }
+                let alternateMichiganShape = getAlternateMichiganShape(currentNodeTag: node.tag.first ?? "")
                 node.fill = StateColors.defaultColor
                 alternateMichiganShape?.fill = StateColors.defaultColor
             }
