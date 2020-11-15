@@ -8,11 +8,9 @@
 
 Mapping US is an app for practicing your knowledge of States in America. 
 
-<p align="center">
 ![](Screenshots/searchSS.png)
 ![](Screenshots/zoomSS.png)
 ![](Screenshots/resultsSS.png)
-</p>
 
 ## Built with
 
